@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise For You ❤️</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #ffe6e6, #ffb3b3);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 85%;
+            max-width: 400px;
+            text-align: center;
+            z-index: 10;
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .card.active { display: block; }
+        h2 { color: #b30000; font-size: 1.8rem; margin-bottom: 15px; }
+        p { color: #4a4a4a; font-size: 1.2rem; line-height: 1.6; font-style: italic; }
+        button {
+            background: #ff4d6d;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.2s;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(255,77,109,0.4);
+        }
+        button:active { transform: scale(0.95); }
+        .heart {
+            position: absolute;
+            bottom: -50px;
+            font-size: 24px;
+            animation: floatUp 4s linear infinite;
+            opacity: 0.7;
+            z-index: 1;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .big-heart { font-size: 4rem; animation: pulse 1.2s infinite; margin-bottom: 10px; }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <iframe src="https://www.youtube.com/embed/Me_OPraanamaa?autoplay=1&mute=0" allow="autoplay" style="display:none;"></iframe>
+
+    <div class="card active" id="p1">
+        <div class="big-heart">🫣</div>
+        <h2>⚠️ Warning!</h2>
+        <p>"Yeh link kholne ke baad aapki cuteness 200% badhne wali hai. Kya aap sach mein taiyar hain?"</p>
+        <button onclick="nextPage('p1', 'p2')">Haan, bilkul! ❤️</button>
+    </div>
+
+    <div class="card" id="p2">
+        <div class="big-heart">❤️</div>
+        <h2>Suno...</h2>
+        <p>"Vaise toh duniya me bohot saare kalesh hain... Par maine sab kaam chhod-chaad ke tumhare liye yeh sasta-sundar page banaya."</p>
+        <button onclick="nextPage('p2', 'p3')">Kyun banaya? (Tap karo) 👈</button>
+    </div>
+
+    <div class="card" id="p3">
+        <div class="big-heart">🤣</div>
+        <h2>Real Reason!</h2>
+        <p>"Kyunki tum roti acchi nahi banati (mazak kar raha hoon)... par tum smile bohot pyaari karti ho! Aur tumhari smile ke liye thoda drama toh banta hai na?"</p>
+        <button onclick="nextPage('p3', 'p4')">Aww, aage batao... 🥰</button>
+    </div>
+
+    <div class="card" id="p4">
+        <div class="big-heart">😤</div>
+        <h2>Ek Shikayat Hai!</h2>
+        <p>"Lekin sach bataun? Mujhe ek badi shikayat hai... Aaj kal log bas Instagram reels share karte hain, koi dhang ka real surprise nahi deta!"</p>
+        <button onclick="nextPage('p4', 'p5')">Toh tum kya de rahe ho? 🤔</button>
+    </div>
+
+    <div class="card" id="p5">
+        <div class="big-heart">✨❤️✨</div>
+        <h2>Main Yeh De Raha Hoon!</h2>
+        <p style="font-size: 1.5rem; color: #b30000; font-weight: bold;">"Kyunki... Ek aisa surprise toh hum bhi deserve krte hai... 🥰✨"</p>
+        <button onclick="nextPage('p5', 'p6')">Oye hoye! (Last Page) 🍿</button>
+    </div>
+
+    <div class="card" id="p6">
+        <div class="big-heart">🥳</div>
+        <h2>Ultimate Request!</h2>
+        <p>"Ab itna pyaara aur customized surprise mila hai, toh jaldi se ek screenshot lo aur mujhe WhatsApp par bhej kar thodi jhoothi tareef karo! 😂🎬🍿"</p>
+        <button onclick="alert('Ab jaao bhi, screenshot bhejkar batao kaisa laga! 😉')">Done! Go to Chat 🫶</button>
+    </div>
+
+    <script>
+        function nextPage(currentId, nextId) {
+            document.getElementById(currentId).classList.remove('active');
+            document.getElementById(nextId).classList.add('active');
+            startHearts();
+        }
+
+        // Floating Hearts Logic
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = ['❤️','💖','✨','🥰','🌸'][Math.floor(Math.random() * 5)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            heart.style.fontSize = Math.random() * 15 + 15 + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 4000);
+        }
+
+        let heartInterval;
+        function startHearts() {
+            if(!heartInterval) {
+                heartInterval = setInterval(createHeart, 400);
+            }
+        }
+    </script>
+</body>
+</html>
