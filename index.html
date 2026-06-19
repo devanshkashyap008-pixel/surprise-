@@ -3,13 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surprise For You ❤️</title>
+    <title>A Special Surprise For You ❤️</title>
     <style>
+        :root {
+            --primary-color: #ff4d79;
+            --secondary-color: #ffb3cc;
+            --bg-gradient: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 50%, #ffb3d9 100%);
+            --text-dark: #2c3e50;
+        }
+
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(to bottom, #ffe6f0, #ffb3d9);
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-gradient);
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -17,89 +24,145 @@
             overflow: hidden;
             position: relative;
         }
+
+        /* Premium Aesthetic Card */
         .card {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(255, 77, 148, 0.2);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 35px 25px;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(255, 77, 121, 0.15);
             width: 85%;
             max-width: 380px;
             text-align: center;
             z-index: 10;
             display: none;
-            animation: fadeIn 0.5s ease-in-out;
-            border: 3px dashed #ff66a3;
-        }
-        .card.active { display: block; }
-        h2 { color: #d60062; font-size: 1.6rem; margin-bottom: 10px; margin-top: 5px; }
-        p { color: #4a4a4a; font-size: 1.1rem; line-height: 1.5; font-weight: 500; }
-        
-        /* Buttons */
-        button {
-            background: #ff4d94;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            font-size: 1rem;
-            border-radius: 25px;
-            cursor: pointer;
-            margin-top: 15px;
-            transition: transform 0.2s;
-            font-weight: bold;
-            box-shadow: 0 5px 15px rgba(255, 77, 148, 0.4);
-        }
-        button:active { transform: scale(0.95); }
-        
-        /* GIF Sizing */
-        .gif-container img {
-            width: 130px;
-            height: 130px;
-            object-fit: contain;
-            margin-bottom: 10px;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
         }
 
-        /* Game Area */
+        .card.active { 
+            display: block; 
+            animation: elegantFade 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        h2 { 
+            color: #d60052; 
+            font-size: 1.6rem; 
+            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        p { 
+            color: var(--text-dark); 
+            font-size: 1.1rem; 
+            line-height: 1.6; 
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        /* Professional Elegant Buttons */
+        button {
+            background: linear-gradient(135deg, #ff4d79 0%, #ff1a53 100%);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 8px 20px rgba(255, 26, 83, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(255, 26, 83, 0.4);
+        }
+
+        button:active { transform: translateY(1px); }
+        
+        /* Interactive Choice Buttons for Puzzle */
+        .choice-btn-container {
+            display: flex;
+            justify-content: space-around;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #ff4d79;
+            border: 2px solid #ff4d79;
+            box-shadow: none;
+        }
+        .btn-secondary:hover {
+            background: #fff0f5;
+            box-shadow: none;
+        }
+
+        /* High-Quality GIF Containers */
+        .gif-container img {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+
+        /* Premium Puzzle/Game Interface */
         #game-area {
             width: 100%;
-            height: 180px;
-            background: #fff0f5;
-            border-radius: 15px;
+            height: 200px;
+            background: rgba(255, 240, 245, 0.7);
+            border-radius: 18px;
             position: relative;
             overflow: hidden;
-            border: 2px solid #ffb3d9;
-            margin-top: 10px;
+            border: 1px dashed var(--primary-color);
+            margin-top: 15px;
         }
+
         #game-heart {
-            font-size: 30px;
+            font-size: 35px;
             position: absolute;
             cursor: pointer;
             user-select: none;
-            top: 50px;
-            left: 50px;
-            transition: all 0.2s ease;
-        }
-        #score-board {
-            font-weight: bold;
-            color: #d60062;
-            margin-bottom: 5px;
+            top: 70px;
+            left: 140px;
+            transition: all 0.18s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* Floating Elements */
+        #score-board {
+            font-weight: 700;
+            color: #d60052;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Ambient Floating Particles */
         .heart {
             position: absolute;
             bottom: -50px;
-            font-size: 24px;
-            animation: floatUp 4s linear infinite;
-            opacity: 0.6;
+            pointer-events: none;
+            animation: floatUpUp 5s linear infinite;
+            opacity: 0.4;
             z-index: 1;
         }
-        @keyframes floatUp {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+
+        @keyframes floatUpUp {
+            0% { transform: translateY(0) scale(0.8) rotate(0deg); opacity: 0.7; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(-115vh) scale(1.2) rotate(360deg); opacity: 0; }
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        @keyframes elegantFade {
+            from { opacity: 0; transform: translateY(25px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
     </style>
 </head>
@@ -109,75 +172,83 @@
 
     <div class="card active" id="p1">
         <div class="gif-container">
-            <img src="https://media.tenor.com/7A2n_lD-H7IAAAAi/bubu-dudu.gif" alt="Bubu Dudu">
+            <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHI3ZzZzNms3N3NqbWNpZ2JhM3I0YmZ1Y25xb3I3bTZ0ZXZ1N2M5diZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/C67XvM5n6S06Wf6N6B/giphy.gif" alt="Bubu Dudu Welcome">
         </div>
-        <h2>⚠️ Warning Ji!</h2>
-        <p>"Yeh link kholne ke baad aapki cuteness 200% badhne wali hai. Handle kar paogi?"</p>
-        <button onclick="nextPage('p1', 'p2')">Haan Baba, Ready Hoon! 🥰</button>
+        <h2>Suno Na... ✨</h2>
+        <p>"Duniya ke saare kalesh aur bzy schedule se door, maine tumhare liye ek chhota sa jahaan banaya hai. Kya tum chalna chahogi?"</p>
+        <button onclick="nextPage('p1', 'p2')">Haan, Chalo Na ❤️</button>
     </div>
 
     <div class="card" id="p2">
         <div class="gif-container">
-            <img src="https://media.tenor.com/vH_fMvA7v_IAAAAi/bubu-dudu-bubu.gif" alt="Bubu Dudu">
+            <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3NpaWN0b3V0YmpyazVvMTV5MndrcmdqYWNoamZhc3Znd3B2anJ6ayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/Y8S6gB734L531Kj04N/giphy.gif" alt="Bubu Dudu Dance">
         </div>
-        <h2>Pehle ek Game Khelo! 🎮</h2>
-        <p>"Aise hi aage nahi jaane dunga, chalo jaldi se upar bhagte hue dil ko 5 baar touch karo!"</p>
-        <button onclick="nextPage('p2', 'p3'); initGame();">Chalo Start Karo! 🍿</button>
+        <h2>A Little Riddle First 🧩</h2>
+        <p>"Lekin aage badhne ke liye humein ek chhota sa test pass karna hoga. Kya tum is daudte hue pyaare se dil ko kabu kar sakti ho?"</p>
+        <button onclick="nextPage('p2', 'p3'); initGame();">Let's Catch It! 🎮</button>
     </div>
 
     <div class="card" id="p3">
-        <div id="score-board">Score: <span id="score">0</span> / 5</div>
+        <div id="score-board">Love Meter: <span id="score">0</span> / 5</div>
         <div id="game-area">
             <div id="game-heart" onclick="catchHeart()">❤️</div>
         </div>
-        <p style="font-size: 0.9rem; color: #888;">Dil bohot tej bhagega, dhyan se touch karna! 😂</p>
-        <button id="game-next-btn" onclick="nextPage('p3', 'p4')" style="display:none; background:#28a745;">Wow! Chalo Aage Chalein 👉</button>
+        <p id="game-commentary" style="font-size: 1rem; color: #ff4d79; font-weight: 600; margin-top: 12px; font-style: italic;">"Yeh dil tumhare paas aane ke liye thoda betaab hai..."</p>
+        <button id="game-next-btn" onclick="nextPage('p3', 'p4')" style="display:none; background: linear-gradient(135deg, #28a745 0%, #218838 100%); box-shadow: 0 8px 20px rgba(40,167,69,0.3);">Puzzle Solved! Aage Chalein ✨</button>
     </div>
 
     <div class="card" id="p4">
         <div class="gif-container">
-            <img src="https://media.tenor.com/z8p_zYp0_m8AAAAi/bubu-dudu-angry.gif" alt="Bubu Dudu">
+            <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbDN3bnZ4eG55NmdnMmpxM3BvZDVzdXh0NGtsZ20ybWZ0ZzV1NzhqOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/l0CLW136M3w1I2bGU/giphy.gif" alt="Bubu Dudu Angry">
         </div>
-        <h2>Ek Shikayat Hai! 😤</h2>
-        <p>"Aaj kal tum bohot bzy rehti ho... Aur insta par reels share karti ho, koi dhang ka surprise nahi deti!"</p>
-        <button onclick="nextPage('p4', 'p5')">Aww sorry, aage batao... 🥺</button>
+        <h2>Ek Khaas Sawaal... 💭</h2>
+        <p>"Vaise... Aaj kal tum bohot zyada bzy rehne lagi ho, reels bhejti ho par real dhyan nahi deti. Sach batana, kya main abhi bhi tumhara favorite surprise hoon?"</p>
+        <div class="choice-btn-container">
+            <button onclick="nextPage('p4', 'p5')">Haan, Always! 🥰</button>
+            <button class="btn-secondary" id="btn-no" onmouseover="dodgeButton()" onclick="dodgeButton()">Nahi toh 😜</button>
+        </div>
     </div>
 
     <div class="card" id="p5">
         <div class="gif-container">
-            <img src="https://media.tenor.com/v4XyH0mKq78AAAAi/bubu-bubu-dudu.gif" alt="Bubu Dudu">
+            <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExdW9hbWtzc3NyeDByNm42d2p5OGNrbnV0NXkxdnl0aWNnd2phb3I1byZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/IdS9b74vUjWvBIn4rF/giphy.gif" alt="Bubu Dudu Love">
         </div>
-        <h2>Isiliye Maine Yeh Banaya...</h2>
-        <p style="font-size: 1.3rem; color: #d60062; font-weight: bold;">"Kyunki... Ek aisa cute surprise toh hum dono bhi deserve karte hain na? 🥰✨"</p>
-        <button onclick="nextPage('p5', 'p6')">Oye hoye! Last Page 💖</button>
+        <h2>Kyunki Tum Khaas Ho... 🌹</h2>
+        <p style="font-size: 1.15rem; color: #d60052; font-weight: 600; font-style: italic;">
+            "Instagram ke chalte-phirte trends toh har koi share kar leta hai... Par ek aisa genuine aur customized surprise sirf tum deserve karti ho. ✨"
+        </p>
+        <button onclick="nextPage('p5', 'p6')">Feelings Overloaded 💖</button>
     </div>
 
     <div class="card" id="p6">
         <div class="gif-container">
-            <img src="https://media.tenor.com/gK662p8V98AAAAAi/bubu-dudu.gif" alt="Bubu Dudu">
+            <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbDVnbjI5aTBlNzRoaDNiaHV2ZHhuNXAwbXkyMzNrejd0OWcyeWhuMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/u0MzkI2G9Lp29fCgT8/giphy.gif" alt="Bubu Dudu Happy">
         </div>
-        <h2>Chalo Tareef Karo! 😂</h2>
-        <p>"Ab itna mehnat karke trending Dudu-Bubu wala surprise banaya hai, toh jaldi se screenshot lo aur WhatsApp par bhej kar thodi tareef karo!"</p>
-        <button onclick="alert('Ab jaao bhi, screenshot le kar WhatsApp par review do! 😉')">Done! Go to Chat 🫶</button>
+        <h2>Captured in My Code 🎬</h2>
+        <p>"Agar is digital koshish ne tumhare chehre par ek pyari si muskaan laayi ho, toh jaldi se iska ek memory screenshot lo aur mujhe WhatsApp par thoda sweet sa review do! ✨🍿"</p>
+        <button onclick="alert('Ab jaldi se jaao chat par aur batao kaisa laga! 😉')">Done! Share the Love 🫶</button>
     </div>
 
     <script>
-        // Page Switching
+        // Smooth Page Routing
         function nextPage(currentId, nextId) {
             document.getElementById(currentId).classList.remove('active');
             document.getElementById(nextId).classList.add('active');
             startHearts();
         }
 
-        // Catch the Heart Game Logic
+        // Catch the Heart Logic
         let score = 0;
         const targetScore = 5;
         const gHeart = document.getElementById('game-heart');
         const gArea = document.getElementById('game-area');
+        const comm = document.getElementById('game-commentary');
+        const romanticLines = ["Ouch! Dhire se... 🤣", "Bach gaya! Fir se try karo... 😜", "Pakad liya! You are sharp... 🙈", "Bas ek aur baar... 🔥", "Perfection! ✨"];
+        let gameInterval;
 
         function moveHeart() {
-            const maxX = gArea.clientWidth - 40;
-            const maxY = gArea.clientHeight - 40;
+            const maxX = gArea.clientWidth - 45;
+            const maxY = gArea.clientHeight - 45;
             const randomX = Math.floor(Math.random() * maxX);
             const randomY = Math.floor(Math.random() * maxY);
             gHeart.style.left = randomX + 'px';
@@ -187,40 +258,50 @@
         function initGame() {
             score = 0;
             document.getElementById('score').innerText = score;
-            setInterval(moveHeart, 750); // Heart moves every 0.75 seconds
+            gameInterval = setInterval(moveHeart, 650); // Fluid professional speed
         }
 
         function catchHeart() {
             if (score < targetScore) {
                 score++;
                 document.getElementById('score').innerText = score;
-                // Change emoji temporarily for fun
+                comm.innerText = romanticLines[score - 1];
                 gHeart.innerHTML = '✨';
-                setTimeout(() => { gHeart.innerHTML = '❤️'; }, 200);
+                setTimeout(() => { gHeart.innerHTML = '❤️'; }, 150);
                 
                 if (score >= targetScore) {
+                    clearInterval(gameInterval);
                     gHeart.style.display = 'none';
+                    comm.innerText = "Wow! You won my heart (literally)! 🥳🎉";
                     document.getElementById('game-next-btn').style.display = 'inline-block';
                 }
             }
         }
 
-        // Background Floating Hearts
+        // Interactive "Nahi toh" Button Dodge Effect
+        function dodgeButton() {
+            const noBtn = document.getElementById('btn-no');
+            const randomX = Math.random() * 80 - 40;
+            const randomY = Math.random() * 80 - 40;
+            noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+        }
+
+        // Ambient Falling/Floating Effects
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
-            heart.innerHTML = ['❤️','💖','✨','🥰','🐼'][Math.floor(Math.random() * 5)];
+            heart.innerHTML = ['❤️','💖','✨','🥰','🌸'][Math.floor(Math.random() * 5)];
             heart.style.left = Math.random() * 100 + 'vw';
             heart.style.animationDuration = Math.random() * 2 + 3 + 's';
             heart.style.fontSize = Math.random() * 15 + 15 + 'px';
             document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 4000);
+            setTimeout(() => heart.remove(), 4500);
         }
 
         let heartInterval;
         function startHearts() {
             if(!heartInterval) {
-                heartInterval = setInterval(createHeart, 400);
+                heartInterval = setInterval(createHeart, 350);
             }
         }
     </script>
