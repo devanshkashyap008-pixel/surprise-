@@ -17,39 +17,49 @@
             align-items: center;
             height: 100vh;
             background-color: #ffe6eb;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             overflow: hidden;
         }
 
         .container {
             text-align: center;
             background: #ffffff;
-            padding: 40px 30px;
+            padding: 30px 20px;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(255, 77, 121, 0.15);
             width: 90%;
-            max-width: 400px;
+            max-width: 360px;
+            min-height: 380px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             position: relative;
-            transition: all 0.5s ease;
         }
 
-        /* Pure CSS Animated Cute Bear Concept (Replaces Local Videos) */
-        .gif-placeholder {
-            width: 150px;
-            height: 150px;
-            margin: 0 auto 25px auto;
+        /* Fixed Size Image Frame */
+        .image-wrapper {
+            width: 160px;
+            height: 160px;
+            margin-bottom: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 5rem;
-            animation: bounce 1.5s infinite ease-in-out;
+            overflow: hidden;
+        }
+
+        .image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         h2 {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             color: #2c3e50;
             margin-bottom: 30px;
             font-weight: 700;
+            line-height: 1.3;
         }
 
         .button-container {
@@ -57,7 +67,8 @@
             justify-content: center;
             align-items: center;
             gap: 20px;
-            height: 60px;
+            width: 100%;
+            height: 50px;
             position: relative;
         }
 
@@ -68,7 +79,6 @@
             border: none;
             border-radius: 12px;
             cursor: pointer;
-            transition: transform 0.1s ease, background 0.3s ease;
         }
 
         .yes-btn {
@@ -78,95 +88,68 @@
             z-index: 5;
         }
 
-        .yes-btn:active {
-            transform: scale(0.95);
-        }
-
         .no-btn {
             background-color: #f1f2f6;
             color: #57606f;
             position: absolute;
             z-index: 10;
-            /* Smooth transitions when moving */
-            transition: left 0.15s ease-out, top 0.15s ease-out, background 0.3s ease;
+            left: 55%;
+            transition: left 0.1s ease-out, top 0.1s ease-out;
         }
 
-        /* Result View Hidden Initially */
         .result-container {
             display: none;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        /* Heart Animation For Success Screen */
-        .hearts-burst {
-            font-size: 5.5rem;
-            animation: pulse 1s infinite alternate;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.15); }
         }
     </style>
 </head>
 <body>
 
     <div class="container" id="questionBox">
-        <div class="gif-placeholder" id="mainIcon">🐼</div>
+        <div class="image-wrapper">
+            <img id="mainImg" src="https://i.postimg.com/0246m4m3/bubu-ask.gif" alt="Bubu Dudu Ask">
+        </div>
         <h2 id="mainQuestion">Do you love me?</h2>
         <div class="button-container">
             <button class="btn yes-btn" onclick="showLove()">Yes</button>
-            <button class="btn no-btn" id="noBtn" onmouseover="teleportButton()" onclick="teleportButton()">No</button>
+            <button class="btn no-btn" id="noBtn" onmouseover="dodge()" onclick="dodge()">No</button>
         </div>
     </div>
 
     <div class="container result-container" id="resultBox">
-        <div class="gif-placeholder hearts-burst">❤️🐻‍❄️❤️</div>
-        <h2 style="color: #ff4d79; margin-bottom: 0;">I knew it! 🥰</h2>
+        <div class="image-wrapper">
+            <img src="https://i.postimg.com/8cn6ND9G/bubu-happy.gif" alt="Bubu Dudu Happy">
+        </div>
+        <h2 style="color: #ff4d79; margin-bottom: 0;">I knew it! 🥰 ❤️</h2>
     </div>
 
     <script>
         const noBtn = document.getElementById('noBtn');
         const container = document.getElementById('questionBox');
+        const mainImg = document.getElementById('mainImg');
 
-        // Initial alignment for No button relative to container layout
-        resetNoButton();
+        function dodge() {
+            // Safe boundaries inside the card area
+            const padding = 30;
+            const maxW = container.clientWidth - noBtn.clientWidth - padding;
+            const maxH = container.clientHeight - noBtn.clientHeight - padding;
 
-        function resetNoButton() {
-            noBtn.style.left = "55%";
-            noBtn.style.top = "5px";
-        }
-
-        // Running / Evading Logic when targeted
-        function teleportButton() {
-            // Get boundaries of the container block
-            const paddingOffset = 40;
-            const maxW = container.clientWidth - noBtn.clientWidth - paddingOffset;
-            const maxH = container.clientHeight - noBtn.clientHeight - paddingOffset;
-
-            // Generate structural coordinates inside the card frame
             let randomX = Math.floor(Math.random() * maxW);
             let randomY = Math.floor(Math.random() * maxH);
 
-            // Keep padding buffer from border walls
-            if (randomX < 10) randomX = 10;
-            if (randomY < 10) randomY = 10;
+            // Keep boundaries structured
+            if (randomX < padding) randomX = padding;
+            if (randomY < padding) randomY = padding;
 
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
             
-            // Fun face swap when dodging
-            document.getElementById('mainIcon').innerText = '🫣';
+            // Change image to sad/shocked bear when dodging
+            mainImg.src = "https://i.postimg.com/Nf73663y/bubu-sad.gif";
         }
 
-        // Show Success Result
         function showLove() {
             document.getElementById('questionBox').style.display = 'none';
-            document.getElementById('resultBox').style.display = 'block';
+            document.getElementById('resultBox').style.display = 'flex';
         }
     </script>
 </body>
