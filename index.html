@@ -3,269 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Love Quest | Multi-Level Adventure ❤️</title>
+    <title>The Love Arcade 🎮❤️</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 50%, #f7cad0 100%);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            position: relative;
+            display: flex; justify-content: center; align-items: center; height: 100vh;
+            background: linear-gradient(135deg, #ffe6eb 0%, #ffccd5 100%);
+            font-family: 'Segoe UI', system-ui, sans-serif; overflow: hidden; position: relative;
         }
-
-        /* Multistage Card Structure */
+        .bg-heart {
+            position: absolute; bottom: -50px; pointer-events: none;
+            animation: floatUp 6s linear infinite; opacity: 0.2; font-size: 20px; z-index: 1;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0.5; }
+            100% { transform: translateY(-110vh) rotate(360deg) scale(1.2); opacity: 0; }
+        }
         .game-card {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            padding: 30px;
-            border-radius: 24px;
-            box-shadow: 0 20px 50px rgba(201, 24, 74, 0.15);
-            width: 88%;
-            max-width: 380px;
-            text-align: center;
-            z-index: 10;
-            display: none;
-            position: relative;
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(10px);
+            padding: 35px 25px; border-radius: 28px; box-shadow: 0 20px 50px rgba(255, 77, 109, 0.15);
+            width: 90%; max-width: 360px; min-height: 420px; display: none;
+            flex-direction: column; justify-content: center; align-items: center;
+            position: relative; z-index: 5; border: 1px solid rgba(255, 255, 255, 0.6); text-align: center;
         }
-
-        .game-card.active { 
-            display: block; 
-            animation: levelTransition 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        .game-card.active { display: flex; animation: levelEntrance 0.5s ease; }
+        @keyframes levelEntrance { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .avatar-box {
+            width: 90px; height: 90px; background: #fff0f3; border-radius: 50%;
+            margin-bottom: 20px; display: flex; justify-content: center; align-items: center;
+            font-size: 3rem; box-shadow: 0 8px 15px rgba(255, 77, 109, 0.08);
         }
-
-        /* Professional Level Transitions */
-        @keyframes levelTransition {
-            from { opacity: 0; transform: translateY(20px) scale(0.97); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+        h2 { font-size: 1.5rem; color: #2c3e50; margin-bottom: 15px; font-weight: 700; }
+        p { color: #5c6b73; font-size: 0.98rem; line-height: 1.5; margin-bottom: 25px; }
+        .btn {
+            background: linear-gradient(135deg, #ff4d79 0%, #ff1a53 100%); color: white;
+            border: none; padding: 12px 30px; font-size: 1rem; font-weight: 600;
+            border-radius: 50px; cursor: pointer; width: 100%; box-shadow: 0 6px 18px rgba(255, 77, 109, 0.3);
         }
-
-        /* Context Image Sizing */
-        .level-image-container {
-            width: 100%;
-            height: 160px;
-            margin-bottom: 20px;
-            overflow: hidden;
-            border-radius: 12px;
-            border: 2px solid #fff;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        .text-input {
+            width: 100%; padding: 12px 20px; border-radius: 50px; border: 2px solid #ffd1dc;
+            outline: none; font-size: 1rem; margin-bottom: 20px; text-align: center;
         }
-
-        .level-image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        #clicker-arena {
+            width: 100%; height: 130px; background: #fff5f6; border-radius: 16px;
+            border: 2px dashed #ffb3cc; position: relative; overflow: hidden; margin-bottom: 20px;
         }
-
-        h2 { color: #d60062; font-size: 1.6rem; margin-bottom: 12px; font-weight: 700; }
-        p { color: #4a4a4a; font-size: 1.05rem; line-height: 1.6; font-weight: 500; margin-bottom: 25px;}
-
-        /* Premium Buttons */
-        button {
-            background: linear-gradient(135deg, #ff4d79 0%, #ff1a53 100%);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            font-size: 1rem;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            box-shadow: 0 8px 18px rgba(255, 26, 83, 0.25);
-            width: 100%;
+        #running-heart { position: absolute; font-size: 30px; cursor: pointer; top: 40px; left: 120px; transition: all 0.15s ease; }
+        .memory-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 20px; width: 100%; }
+        .memory-card {
+            height: 55px; background: #ff4d79; color: transparent; font-size: 1.5rem;
+            display: flex; justify-content: center; align-items: center; border-radius: 10px; cursor: pointer;
         }
-
-        button:active { transform: scale(0.97); }
-
-        /* Level 3: Interaction Area */
-        #game-area {
-            width: 100%;
-            height: 160px;
-            background: rgba(255, 240, 245, 0.7);
-            border-radius: 15px;
-            position: relative;
-            overflow: hidden;
-            border: 2px dashed #ffb3d9;
-            margin-top: 15px;
-            margin-bottom: 20px;
-        }
-
-        #game-heart {
-            font-size: 30px;
-            position: absolute;
-            cursor: pointer;
-            user-select: none;
-            top: 60px; left: 140px;
-            transition: all 0.15s ease;
-        }
-
-        /* Floating Heart Decor */
-        .heart {
-            position: absolute;
-            bottom: -50px;
-            pointer-events: none;
-            animation: riseUp 5s linear infinite;
-            opacity: 0.4;
-            z-index: 1;
-        }
-
-        @keyframes riseUp {
-            0% { transform: translateY(0) scale(0.8) rotate(0deg); opacity: 0.6; }
-            100% { transform: translateY(-115vh) scale(1.2) rotate(360deg); opacity: 0; }
-        }
+        .memory-card.flipped { background: #fff0f3; color: initial; }
+        .choice-container { display: flex; gap: 15px; width: 100%; position: relative; height: 50px; }
+        .btn-dodge { background: #f8f9fa; color: #6c757d; position: absolute; left: 55%; border: 1px solid #e9ecef; box-shadow: none; }
     </style>
 </head>
 <body>
 
-    <iframe src="https://www.youtube.com/embed/Me_OPraanamaa?autoplay=1&mute=0" allow="autoplay" style="display:none;"></iframe>
-
     <div class="game-card active" id="p1">
-        <div class="level-image-container">
-            <img src="https://i.postimg.com/4xPZ7YyS/level1-library.jpg" alt="Level 1 Library Entrance">
-        </div>
-        <h2>Suno Na... ✨</h2>
-        <p>"Duniya ke saare kalesh aur bzy schedule se door, maine tumhare liye ek chhota sa, mehfooz jahaan design kiya hai. Kya tum chalna chahogi?"</p>
-        <button onclick="goToStage('p1', 'p2')">Haan, Chalo Na ❤️</button>
+        <div class="avatar-box">🎮</div>
+        <h2>The Love Arcade v2.0</h2>
+        <p>"Arey suno! Maine tumhare liye ek special multi-level gaming maze banaya hai. Kya tum saare levels paar karke end tak pahonch sakti ho?"</p>
+        <button class="btn" onclick="nextPage('p1', 'p2')">Let's Play! 🚀</button>
     </div>
 
     <div class="game-card" id="p2">
-        <div class="level-image-container">
-            <img src="https://i.postimg.com/Bbt0kPzC/level2-riddle.jpg" alt="Level 2 Riddle Context">
-        </div>
-        <h2>A Little Riddle First 🧩</h2>
-        <p>"Aage badhne ke liye humein ek chhota sa cryptographic parameter clear karna hoga. 'Password' tumhare hi smile ke ek unique pattern mein chhupa hai. Verify answer!"</p>
-        <button onclick="goToStage('p2', 'p3'); initGame();">Unlock Surprise 🎮</button>
+        <div class="avatar-box">🧩</div>
+        <h2>Level 1: The Riddle</h2>
+        <p>"Duniya ki wo kaunsi cheez hai jo gusse me golgappa ban jaati hai, pr thodi der me cute shona ban jaati hai?"</p>
+        <input type="text" class="text-input" id="riddleAns" placeholder="Hint: Tum khud 😉">
+        <button class="btn" onclick="checkRiddle()">Verify Answer 🔓</button>
     </div>
 
     <div class="game-card" id="p3">
-        <div class="level-image-container" style="background-image: url('https://i.postimg.com/HnB6D4M0/level3-pulselock.jpg'); border: none; height: 180px;"></div>
-        <div id="score-board" style="color: #d60062; font-weight: bold; margin-bottom: 10px;">Points: <span id="points">0</span> / 5</div>
-        <div id="game-area">
-            <div id="game-heart" onclick="catchPulse()">❤️</div>
-        </div>
-        <p id="game-feedback" style="font-size: 0.95rem; color: #ff4d79; font-weight: 600;">Dhyan se touch karna! 😂</p>
-        <button id="stage3-next" onclick="goToStage('stage3', 'stage4')" style="display:none; background:#28a745;">Calibration Correct! 👉</button>
+        <div class="avatar-box">⚡</div>
+        <h2>Level 2: Heart Catcher</h2>
+        <p>Aapki ungliyan kitni tez hain? Is bhaagte hue dil ko 5 baar touch karo!</p>
+        <div style="font-weight: 700; color: #ff4d79; margin-bottom: 10px;">Score: <span id="click-score">0</span> / 5</div>
+        <div id="clicker-arena"><div id="running-heart" onclick="catchHeart()">❤️</div></div>
+        <button class="btn" id="p3-next" style="display: none;" onclick="nextPage('p3', 'p4'); initMemoryGame();">Next Level 👉</button>
     </div>
 
     <div class="game-card" id="p4">
-        <div class="level-image-container">
-            <img src="https://i.postimg.com/zXnQ4K89/level4-memorygrid.jpg" alt="Level 4 Memory Match">
-        </div>
-        <h2>Ek Khaas Sawaal... 💭</h2>
-        <p>"Vaise... Aaj kal tum bohot zyada bzy rehne lagi ho, reels bhejti ho par real dhyan nahi deti. Sach batana, kya main abhi bhi tumhara favorite unique memory hoon?"</p>
-        <div class="interactive-choice-group" style="display: flex; gap: 10px;">
-            <button onclick="goToStage('p4', 'p5')">Haan, Always! 🥰</button>
-            <button class="dodge-btn" id="dodgingNoBtn" style="background:#fff; color:#ff4d79; border:2px solid #ff4d79; box-shadow: none;" onmouseover="dodgeChoice()" onclick="dodgeChoice()">Nahi toh 😜</button>
-        </div>
+        <div class="avatar-box">🧠</div>
+        <h2>Level 3: Match the Vibes</h2>
+        <p>Saare matching pairs dhoodho! Mere dil ki baatein kahan chhupi hain?</p>
+        <div class="memory-grid" id="grid"></div>
+        <button class="btn" id="p4-next" style="display: none;" onclick="nextPage('p4', 'p5')">Wow, Clear! Continue 👉</button>
     </div>
 
     <div class="game-card" id="p5">
-        <div class="level-image-container">
-            <img src="https://i.postimg.com/fRb1jT94/level5-truechoice.jpg" alt="Level 5 Core Love Statement">
+        <div class="avatar-box">🙄</div>
+        <h2>Level 4: Honest Check</h2>
+        <p>"Aaj kal tum bohot bzy rehti ho. Mujhe reels send karti ho par real dhyan nahi deti. Kya ye sach hai?"</p>
+        <div class="choice-container" style="justify-content: center; gap: 10px;">
+            <button class="btn" style="width: auto;" onclick="nextPage('p5', 'p6')">Sorry, ab dhyan dungi! 🥰</button>
+            <button class="btn" style="width: auto; background: #6c757d;" onclick="alert('Galat jawab! Sorry bolo 😂')">Nahi toh 😜</button>
         </div>
-        <h2>You Are Nayab... 🌹</h2>
-        <p style="font-size: 1.15rem; color: #d60062; font-weight: 600; font-style: italic;">
-            "Instagram ke temporary trends toh har koi follow kar leta hai... Par ek aisa genuine aur highly customized surprise sirf tum jaisi unique ladki deserve karti hai! ✨"
-        </p>
-        <button onclick="goToStage('p5', 'p6')">Final Level Overload 💖</button>
     </div>
 
     <div class="game-card" id="p6">
-        <div class="level-image-container" style="height: 180px;">
-            <img src="https://i.postimg.com/4xx4C7r3/level6-confession.jpg" alt="Level 6 Confession Review">
+        <div class="avatar-box">😈</div>
+        <h2>Level 5: The Final Test</h2>
+        <p>"Accha sab chhodna... Sach sach batao, Do you love me? (Mana karke dikhao ab)"</p>
+        <div class="choice-container" id="dodge-box">
+            <button class="btn" style="position: absolute; left: 10%; width: 40%;" onclick="nextPage('p6', 'p7')">Yes!</button>
+            <button class="btn btn-dodge" id="noBtn" style="width: 40%;" onmouseover="dodgeButton()" onclick="dodgeButton()">No</button>
         </div>
-        <h2>Captured in My Code 🎬</h2>
-        <p>"Agar is multistage highly dynamic adventure code ne tumhare chehre par ek professional aur aesthetic smile laayi ho, toh ek unique screenshot lo aur WhatsApp par review do! ✨🍿"</p>
-        <button onclick="alert('Ab jaldi se jaao chat par aur review do! 😉')">Done! Share Love 🫶</button>
+    </div>
+
+    <div class="game-card" id="p7">
+        <div class="avatar-box" style="background: none; box-shadow: none;">💖</div>
+        <h2>Victory! You Won My Heart 🎉</h2>
+        <p style="color: #ff4d79; font-weight: 700; font-size: 1.1rem; font-style: italic;">
+            "Instagram ke temporary trends toh har koi follow kar leta hai... Par ek aisa genuine aur customized gaming surprise sirf tum jaisi unique ladki deserve karti hai! ✨"
+        </p>
+        <button class="btn" onclick="nextPage('p7', 'p8')">Claim Reward 🎁</button>
+    </div>
+
+    <div class="game-card" id="p8">
+        <div class="avatar-box">🎬</div>
+        <h2>Mission Accomplished 👑</h2>
+        <p>"Agar is custom cyber game ne tumhare chehre par ek pyaari si smile laayi ho, toh jaldi se ek memory screenshot lo aur mujhe WhatsApp par ek sweet sa review do! ✨🍿"</p>
+        <button class="btn" onclick="alert('Jaldi jao aur review do abhi! 😉')">Done! Share Love 🫶</button>
     </div>
 
     <script>
-        function goToStage(currentId, nextId) {
-            document.getElementById(currentId).classList.remove('active');
-            document.getElementById(nextId).classList.add('active');
-            triggerHeartPulse();
+        function nextPage(curr, next) {
+            document.getElementById(curr).classList.remove('active');
+            document.getElementById(next).classList.add('active');
         }
-
-        // Pulse Lock Game Logic
-        let scoreCount = 0;
-        const targetPoints = 5;
-        const hrt = document.getElementById('game-heart');
-        const area = document.getElementById('game-area');
-        const comm = document.getElementById('game-feedback');
-        const feedbackLines = ["Dhire se! 🤣", "Bach gaya! Fir se try karo... 😜", "Ouch! Pakad liya... 🙈", "Pakadne wale ho bas! 🔥", "Perfection! ✨"];
-        let pointInterval;
-
-        function relocate() {
-            constmaxX = area.clientWidth - 45;
-            const maxY = area.clientHeight - 45;
-            const randomX = Math.floor(Math.random() * maxX);
-            const randomY = Math.floor(Math.random() * maxY);
-            hrt.style.left = randomX + 'px';
-            hrt.style.top = randomY + 'px';
+        function checkRiddle() {
+            const ans = document.getElementById('riddleAns').value.trim().toLowerCase();
+            if(ans.length > 1) { nextPage('p2', 'p3'); initClicker(); }
+            else { alert('Arey! Sahi jawab type karo jaldi se! 😜'); }
         }
-
-        function initGame() {
-            scoreCount = 0;
-            document.getElementById('points').innerText = scoreCount;
-            pointInterval = setInterval(relocate, 650); 
+        let clickScore = 0; const hrt = document.getElementById('running-heart'); const arena = document.getElementById('clicker-arena'); let clkInterval;
+        function moveHeart() {
+            const maxX = arena.clientWidth - 35; const maxY = arena.clientHeight - 35;
+            hrt.style.left = Math.floor(Math.random() * maxX) + 'px'; hrt.style.top = Math.floor(Math.random() * maxY) + 'px';
         }
-
-        function catchPulse() {
-            if (scoreCount < targetPoints) {
-                scoreCount++;
-                document.getElementById('points').innerText = scoreCount;
-                comm.innerText = feedbackLines[scoreCount - 1];
-                hrt.innerHTML = '✨';
-                setTimeout(() => { hrt.innerHTML = '❤️'; }, 150);
-                
-                if (scoreCount >= targetPoints) {
-                    clearInterval(pointInterval);
-                    hrt.style.display = 'none';
-                    comm.innerText = "Wow! Calibration Complete! 🥳🎉";
-                    document.getElementById('stage3-next').style.display = 'inline-block';
-                }
+        function initClicker() { clkInterval = setInterval(moveHeart, 650); }
+        function catchHeart() {
+            if(clickScore < 5) {
+                clickScore++; document.getElementById('click-score').innerText = clickScore;
+                if(clickScore >= 5) { clearInterval(clkInterval); hrt.style.display = 'none'; document.getElementById('p3-next').style.display = 'block'; }
             }
         }
-
-        // Interactive "Nahi toh" Button Dodge
-        function dodgeChoice() {
-            const dodgeBtn = document.getElementById('dodgingNoBtn');
-            const randomX = Math.random() * 80 - 40;
-            const randomY = Math.random() * 80 - 40;
-            dodgeBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+        const items = ['❤️', '❤️', '✨', '✨', '🌸', '🌸', '👑', '👑']; let flippedCards = []; let matchedPairs = 0;
+        function initMemoryGame() {
+            const grid = document.getElementById('grid'); grid.innerHTML = ''; items.sort(() => 0.5 - Math.random());
+            items.forEach((item, index) => {
+                const card = document.createElement('div'); card.classList.add('memory-card'); card.dataset.value = item;
+                card.innerText = '?'; card.addEventListener('click', flipCard); grid.appendChild(card);
+            });
         }
-
-        // Particle Glow
-        function addHeartGlow() {
-            const h = document.createElement('div');
-            h.classList.add('heart');
-            h.innerHTML = ['❤️','💖','✨','🥰','🌸'][Math.floor(Math.random() * 5)];
-            h.style.left = Math.random() * 100 + 'vw';
-            h.style.animationDuration = Math.random() * 2 + 3 + 's';
-            h.style.fontSize = Math.random() * 15 + 15 + 'px';
-            document.body.appendChild(h);
-            setTimeout(() => h.remove(), 4500);
-        }
-
-        let glowingInterval;
-        function triggerHeartPulse() {
-            if(!glowingInterval) {
-                glowingInterval = setInterval(addHeartGlow, 350);
+        function flipCard() {
+            if (flippedCards.length < 2 && !this.classList.contains('flipped')) {
+                this.classList.add('flipped'); this.innerText = this.dataset.value; flippedCards.push(this);
+                if (flippedCards.length === 2) { setTimeout(checkMatch, 500); }
             }
         }
+        function checkMatch() {
+            if (flippedCards[0].dataset.value === flippedCards[1].dataset.value) {
+                matchedPairs++; if (matchedPairs === 4) { document.getElementById('p4-next').style.display = 'block'; }
+            } else {
+                flippedCards[0].classList.remove('flipped'); flippedCards[0].innerText = '?';
+                flippedCards[1].classList.remove('flipped'); flippedCards[1].innerText = '?';
+            }
+            flippedCards = [];
+        }
+        const complaints = ["No", "Pakka? 🤨", "Soch lo... 🫣", "Galat baat! 🙄", "Yes dabao 🤫"]; let cmpIdx = 0;
+        function dodgeButton() {
+            const noBtn = document.getElementById('noBtn'); const dBox = document.getElementById('dodge-box');
+            const maxW = dBox.clientWidth - noBtn.clientWidth - 10;
+            noBtn.style.left = Math.floor(Math.random() * maxW) + 'px';
+            if(cmpIdx < complaints.length - 1) { cmpIdx++; noBtn.innerText = complaints[cmpIdx]; }
+        }
+        function spawnBackgroundDecor() {
+            const p = document.createElement('div'); p.classList.add('bg-heart'); p.innerHTML = ['❤️','💖','✨'][Math.floor(Math.random() * 3)];
+            p.style.left = Math.random() * 100 + 'vw'; p.style.animationDuration = (Math.random() * 2 + 4) + 's';
+            document.body.appendChild(p); setTimeout(() => p.remove(), 5500);
+        }
+        setInterval(spawnBackgroundDecor, 450);
     </script>
 </body>
 </html>
