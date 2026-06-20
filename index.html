@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Do You Love Me? ❤️</title>
+    <title>The Love Quest | Multi-Level Adventure ❤️</title>
     <style>
         * {
             margin: 0;
@@ -12,162 +12,259 @@
         }
 
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            margin: 0;
+            padding: 0;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 50%, #f7cad0 100%);
             height: 100vh;
-            background: linear-gradient(135deg, #ffe6eb 0%, #ffd1dc 100%);
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             overflow: hidden;
+            position: relative;
         }
 
-        .container {
-            text-align: center;
-            background: #ffffff;
-            padding: 40px 25px;
+        /* Multistage Card Structure */
+        .game-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 30px;
             border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.12);
-            width: 85%;
-            max-width: 350px;
-            min-height: 340px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            box-shadow: 0 20px 50px rgba(201, 24, 74, 0.15);
+            width: 88%;
+            max-width: 380px;
+            text-align: center;
+            z-index: 10;
+            display: none;
             position: relative;
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
         }
 
-        /* Pure CSS Styled Interactive Vector Icon Frame */
-        .icon-box {
-            width: 100px;
-            height: 100px;
-            background: #fff0f3;
-            border-radius: 50%;
-            margin-bottom: 25px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 3.2rem;
-            box-shadow: inset 0 4px 10px rgba(255, 77, 109, 0.05);
-            animation: floatGlow 2s infinite ease-in-out;
+        .game-card.active { 
+            display: block; 
+            animation: levelTransition 0.6s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        h2 {
-            font-size: 1.6rem;
-            color: #2c3e50;
-            margin-bottom: 35px;
-            font-weight: 700;
-            line-height: 1.3;
+        /* Professional Level Transitions */
+        @keyframes levelTransition {
+            from { opacity: 0; transform: translateY(20px) scale(0.97); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        .button-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
+        /* Context Image Sizing */
+        .level-image-container {
             width: 100%;
-            height: 50px;
-            position: relative;
+            height: 160px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            border-radius: 12px;
+            border: 2px solid #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
-        .btn {
-            padding: 12px 28px;
-            font-size: 1.05rem;
-            font-weight: 600;
+        .level-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        h2 { color: #d60062; font-size: 1.6rem; margin-bottom: 12px; font-weight: 700; }
+        p { color: #4a4a4a; font-size: 1.05rem; line-height: 1.6; font-weight: 500; margin-bottom: 25px;}
+
+        /* Premium Buttons */
+        button {
+            background: linear-gradient(135deg, #ff4d79 0%, #ff1a53 100%);
+            color: white;
             border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
             border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.1s ease, background 0.3s ease;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 8px 18px rgba(255, 26, 83, 0.25);
+            width: 100%;
         }
 
-        .yes-btn {
-            background: linear-gradient(135deg, #ff4d79 0%, #ff2a5f 100%);
-            color: white;
-            box-shadow: 0 6px 18px rgba(255, 77, 109, 0.3);
-            z-index: 5;
+        button:active { transform: scale(0.97); }
+
+        /* Level 3: Interaction Area */
+        #game-area {
+            width: 100%;
+            height: 160px;
+            background: rgba(255, 240, 245, 0.7);
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            border: 2px dashed #ffb3d9;
+            margin-top: 15px;
+            margin-bottom: 20px;
         }
 
-        .yes-btn:active {
-            transform: scale(0.95);
-        }
-
-        .no-btn {
-            background-color: #f1f2f6;
-            color: #57606f;
+        #game-heart {
+            font-size: 30px;
             position: absolute;
-            z-index: 10;
-            left: 55%;
-            transition: left 0.15s cubic-bezier(0.25, 1, 0.5, 1), top 0.15s cubic-bezier(0.25, 1, 0.5, 1);
-            border: 1px solid #e4e7eb;
+            cursor: pointer;
+            user-select: none;
+            top: 60px; left: 140px;
+            transition: all 0.15s ease;
         }
 
-        .result-container {
-            display: none;
+        /* Floating Heart Decor */
+        .heart {
+            position: absolute;
+            bottom: -50px;
+            pointer-events: none;
+            animation: riseUp 5s linear infinite;
+            opacity: 0.4;
+            z-index: 1;
         }
 
-        /* Success Stage Style Variations */
-        .pulse-heart {
-            font-size: 3.8rem;
-            animation: heartPulse 0.8s infinite alternate cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        @keyframes floatGlow {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-
-        @keyframes heartPulse {
-            0% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(255,77,109,0.4)); }
-            100% { transform: scale(1.18); filter: drop-shadow(0 0 12px rgba(255,77,109,0.6)); }
+        @keyframes riseUp {
+            0% { transform: translateY(0) scale(0.8) rotate(0deg); opacity: 0.6; }
+            100% { transform: translateY(-115vh) scale(1.2) rotate(360deg); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container" id="questionBox">
-        <div class="icon-box" id="displayEmoji">🐼</div>
-        <h2 id="mainQuestion">Do you love me?</h2>
-        <div class="button-container">
-            <button class="btn yes-btn" onclick="showLove()">Yes</button>
-            <button class="btn no-btn" id="noBtn" onmouseover="dodgeButton()" onclick="dodgeButton()">No</button>
+    <iframe src="https://www.youtube.com/embed/Me_OPraanamaa?autoplay=1&mute=0" allow="autoplay" style="display:none;"></iframe>
+
+    <div class="game-card active" id="p1">
+        <div class="level-image-container">
+            <img src="https://i.postimg.com/4xPZ7YyS/level1-library.jpg" alt="Level 1 Library Entrance">
+        </div>
+        <h2>Suno Na... ✨</h2>
+        <p>"Duniya ke saare kalesh aur bzy schedule se door, maine tumhare liye ek chhota sa, mehfooz jahaan design kiya hai. Kya tum chalna chahogi?"</p>
+        <button onclick="goToStage('p1', 'p2')">Haan, Chalo Na ❤️</button>
+    </div>
+
+    <div class="game-card" id="p2">
+        <div class="level-image-container">
+            <img src="https://i.postimg.com/Bbt0kPzC/level2-riddle.jpg" alt="Level 2 Riddle Context">
+        </div>
+        <h2>A Little Riddle First 🧩</h2>
+        <p>"Aage badhne ke liye humein ek chhota sa cryptographic parameter clear karna hoga. 'Password' tumhare hi smile ke ek unique pattern mein chhupa hai. Verify answer!"</p>
+        <button onclick="goToStage('p2', 'p3'); initGame();">Unlock Surprise 🎮</button>
+    </div>
+
+    <div class="game-card" id="p3">
+        <div class="level-image-container" style="background-image: url('https://i.postimg.com/HnB6D4M0/level3-pulselock.jpg'); border: none; height: 180px;"></div>
+        <div id="score-board" style="color: #d60062; font-weight: bold; margin-bottom: 10px;">Points: <span id="points">0</span> / 5</div>
+        <div id="game-area">
+            <div id="game-heart" onclick="catchPulse()">❤️</div>
+        </div>
+        <p id="game-feedback" style="font-size: 0.95rem; color: #ff4d79; font-weight: 600;">Dhyan se touch karna! 😂</p>
+        <button id="stage3-next" onclick="goToStage('stage3', 'stage4')" style="display:none; background:#28a745;">Calibration Correct! 👉</button>
+    </div>
+
+    <div class="game-card" id="p4">
+        <div class="level-image-container">
+            <img src="https://i.postimg.com/zXnQ4K89/level4-memorygrid.jpg" alt="Level 4 Memory Match">
+        </div>
+        <h2>Ek Khaas Sawaal... 💭</h2>
+        <p>"Vaise... Aaj kal tum bohot zyada bzy rehne lagi ho, reels bhejti ho par real dhyan nahi deti. Sach batana, kya main abhi bhi tumhara favorite unique memory hoon?"</p>
+        <div class="interactive-choice-group" style="display: flex; gap: 10px;">
+            <button onclick="goToStage('p4', 'p5')">Haan, Always! 🥰</button>
+            <button class="dodge-btn" id="dodgingNoBtn" style="background:#fff; color:#ff4d79; border:2px solid #ff4d79; box-shadow: none;" onmouseover="dodgeChoice()" onclick="dodgeChoice()">Nahi toh 😜</button>
         </div>
     </div>
 
-    <div class="container result-container" id="resultBox">
-        <div class="icon-box pulse-heart" style="background: none; box-shadow: none;">💖</div>
-        <h2 style="color: #ff4d79; margin-bottom: 0; font-size: 1.8rem;">I knew it! 🥰 ✨</h2>
+    <div class="game-card" id="p5">
+        <div class="level-image-container">
+            <img src="https://i.postimg.com/fRb1jT94/level5-truechoice.jpg" alt="Level 5 Core Love Statement">
+        </div>
+        <h2>You Are Nayab... 🌹</h2>
+        <p style="font-size: 1.15rem; color: #d60062; font-weight: 600; font-style: italic;">
+            "Instagram ke temporary trends toh har koi follow kar leta hai... Par ek aisa genuine aur highly customized surprise sirf tum jaisi unique ladki deserve karti hai! ✨"
+        </p>
+        <button onclick="goToStage('p5', 'p6')">Final Level Overload 💖</button>
+    </div>
+
+    <div class="game-card" id="p6">
+        <div class="level-image-container" style="height: 180px;">
+            <img src="https://i.postimg.com/4xx4C7r3/level6-confession.jpg" alt="Level 6 Confession Review">
+        </div>
+        <h2>Captured in My Code 🎬</h2>
+        <p>"Agar is multistage highly dynamic adventure code ne tumhare chehre par ek professional aur aesthetic smile laayi ho, toh ek unique screenshot lo aur WhatsApp par review do! ✨🍿"</p>
+        <button onclick="alert('Ab jaldi se jaao chat par aur review do! 😉')">Done! Share Love 🫶</button>
     </div>
 
     <script>
-        const noBtn = document.getElementById('noBtn');
-        const container = document.getElementById('questionBox');
-        const displayEmoji = document.getElementById('displayEmoji');
-        
-        // Dynamic Dodge Action Core
-        function dodgeButton() {
-            const padding = 25;
-            // Strict alignment math within the box card structure
-            const maxW = container.clientWidth - noBtn.clientWidth - padding;
-            const maxH = container.clientHeight - noBtn.clientHeight - padding;
-
-            let randomX = Math.floor(Math.random() * maxW);
-            let randomY = Math.floor(Math.random() * maxH);
-
-            // Buffer corrections
-            if (randomX < padding) randomX = padding;
-            if (randomY < padding) randomY = padding;
-
-            noBtn.style.left = randomX + 'px';
-            noBtn.style.top = randomY + 'px';
-            
-            // Interaction feedback via code emoji update
-            displayEmoji.innerText = '🫣';
+        function goToStage(currentId, nextId) {
+            document.getElementById(currentId).classList.remove('active');
+            document.getElementById(nextId).classList.add('active');
+            triggerHeartPulse();
         }
 
-        function showLove() {
-            document.getElementById('questionBox').style.display = 'none';
-            document.getElementById('resultBox').style.display = 'flex';
+        // Pulse Lock Game Logic
+        let scoreCount = 0;
+        const targetPoints = 5;
+        const hrt = document.getElementById('game-heart');
+        const area = document.getElementById('game-area');
+        const comm = document.getElementById('game-feedback');
+        const feedbackLines = ["Dhire se! 🤣", "Bach gaya! Fir se try karo... 😜", "Ouch! Pakad liya... 🙈", "Pakadne wale ho bas! 🔥", "Perfection! ✨"];
+        let pointInterval;
+
+        function relocate() {
+            constmaxX = area.clientWidth - 45;
+            const maxY = area.clientHeight - 45;
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+            hrt.style.left = randomX + 'px';
+            hrt.style.top = randomY + 'px';
+        }
+
+        function initGame() {
+            scoreCount = 0;
+            document.getElementById('points').innerText = scoreCount;
+            pointInterval = setInterval(relocate, 650); 
+        }
+
+        function catchPulse() {
+            if (scoreCount < targetPoints) {
+                scoreCount++;
+                document.getElementById('points').innerText = scoreCount;
+                comm.innerText = feedbackLines[scoreCount - 1];
+                hrt.innerHTML = '✨';
+                setTimeout(() => { hrt.innerHTML = '❤️'; }, 150);
+                
+                if (scoreCount >= targetPoints) {
+                    clearInterval(pointInterval);
+                    hrt.style.display = 'none';
+                    comm.innerText = "Wow! Calibration Complete! 🥳🎉";
+                    document.getElementById('stage3-next').style.display = 'inline-block';
+                }
+            }
+        }
+
+        // Interactive "Nahi toh" Button Dodge
+        function dodgeChoice() {
+            const dodgeBtn = document.getElementById('dodgingNoBtn');
+            const randomX = Math.random() * 80 - 40;
+            const randomY = Math.random() * 80 - 40;
+            dodgeBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+        }
+
+        // Particle Glow
+        function addHeartGlow() {
+            const h = document.createElement('div');
+            h.classList.add('heart');
+            h.innerHTML = ['❤️','💖','✨','🥰','🌸'][Math.floor(Math.random() * 5)];
+            h.style.left = Math.random() * 100 + 'vw';
+            h.style.animationDuration = Math.random() * 2 + 3 + 's';
+            h.style.fontSize = Math.random() * 15 + 15 + 'px';
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 4500);
+        }
+
+        let glowingInterval;
+        function triggerHeartPulse() {
+            if(!glowingInterval) {
+                glowingInterval = setInterval(addHeartGlow, 350);
+            }
         }
     </script>
 </body>
