@@ -3,130 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Love Arcade 🎮❤️</title>
+    <title>The Premium Love Arcade 🎮❤️</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             display: flex; justify-content: center; align-items: center; height: 100vh;
             background: linear-gradient(135deg, #ffe6eb 0%, #ffccd5 100%);
             font-family: 'Segoe UI', system-ui, sans-serif; overflow: hidden; position: relative;
+            user-select: none; -webkit-user-select: none;
         }
         .bg-heart {
             position: absolute; bottom: -50px; pointer-events: none;
-            animation: floatUp 6s linear infinite; opacity: 0.2; font-size: 20px; z-index: 1;
+            animation: floatUp 6s linear infinite; opacity: 0.15; font-size: 20px; z-index: 1;
         }
         @keyframes floatUp {
             0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0.5; }
             100% { transform: translateY(-110vh) rotate(360deg) scale(1.2); opacity: 0; }
         }
         .game-card {
-            background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(10px);
-            padding: 35px 25px; border-radius: 28px; box-shadow: 0 20px 50px rgba(255, 77, 109, 0.15);
-            width: 90%; max-width: 360px; min-height: 420px; display: none;
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+            padding: 25px 20px; border-radius: 28px; box-shadow: 0 20px 50px rgba(255, 77, 109, 0.15);
+            width: 92%; max-width: 360px; min-height: 470px; display: none;
             flex-direction: column; justify-content: center; align-items: center;
             position: relative; z-index: 5; border: 1px solid rgba(255, 255, 255, 0.6); text-align: center;
         }
-        .game-card.active { display: flex; animation: levelEntrance 0.5s ease; }
+        .game-card.active { display: flex; animation: levelEntrance 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         @keyframes levelEntrance { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        .avatar-box {
-            width: 90px; height: 90px; background: #fff0f3; border-radius: 50%;
-            margin-bottom: 20px; display: flex; justify-content: center; align-items: center;
-            font-size: 3rem; box-shadow: 0 8px 15px rgba(255, 77, 109, 0.08);
-        }
-        h2 { font-size: 1.5rem; color: #2c3e50; margin-bottom: 15px; font-weight: 700; }
-        p { color: #5c6b73; font-size: 0.98rem; line-height: 1.5; margin-bottom: 25px; }
-        .btn {
-            background: linear-gradient(135deg, #ff4d79 0%, #ff1a53 100%); color: white;
-            border: none; padding: 12px 30px; font-size: 1rem; font-weight: 600;
-            border-radius: 50px; cursor: pointer; width: 100%; box-shadow: 0 6px 18px rgba(255, 77, 109, 0.3);
-        }
-        .text-input {
-            width: 100%; padding: 12px 20px; border-radius: 50px; border: 2px solid #ffd1dc;
-            outline: none; font-size: 1rem; margin-bottom: 20px; text-align: center;
-        }
-        #clicker-arena {
-            width: 100%; height: 130px; background: #fff5f6; border-radius: 16px;
-            border: 2px dashed #ffb3cc; position: relative; overflow: hidden; margin-bottom: 20px;
-        }
-        #running-heart { position: absolute; font-size: 30px; cursor: pointer; top: 40px; left: 120px; transition: all 0.15s ease; }
-        .memory-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 20px; width: 100%; }
-        .memory-card {
-            height: 55px; background: #ff4d79; color: transparent; font-size: 1.5rem;
-            display: flex; justify-content: center; align-items: center; border-radius: 10px; cursor: pointer;
-        }
-        .memory-card.flipped { background: #fff0f3; color: initial; }
-        .choice-container { display: flex; gap: 15px; width: 100%; position: relative; height: 50px; }
-        .btn-dodge { background: #f8f9fa; color: #6c757d; position: absolute; left: 55%; border: 1px solid #e9ecef; box-shadow: none; }
+        .avatar-box { width: 80px; height: 80px; background: #fff0f3; border-radius: 50%; margin-bottom: 12px; display: flex; justify-content: center; align-items: center; font-size: 2.5rem; box-shadow: 0 8px 15px rgba(255, 77, 109, 0.08); }
+        .level-tag { background: #ff4d79; color: white; font-size: 0.75rem; padding: 4px 12px; border-radius: 20px; font-weight: 700; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
+        h2 { font-size: 1.35rem; color: #2c3e50; margin-bottom: 10px; font-weight: 700; }
+        p { color: #5c6b73; font-size: 0.95rem; line-height: 1.5; margin-bottom: 18px; font-weight: 500; }
+        .btn { background: linear-gradient(135deg, #ff4d79 0%, #ff1a53 100%); color: white; border: none; padding: 12px 30px; font-size: 1rem; font-weight: 600; border-radius: 50px; cursor: pointer; width: 100%; box-shadow: 0 6px 18px rgba(255, 77, 109, 0.3); transition: all 0.2s; }
+        .btn:active { transform: scale(0.98); }
+        .text-input { width: 100%; padding: 12px 20px; border-radius: 50px; border: 2px solid #ffd1dc; outline: none; font-size: 1rem; margin-bottom: 15px; text-align: center; font-weight: 600; }
+        
+        /* Tic Tac Toe */
+        .ttt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; width: 100%; max-width: 190px; margin-bottom: 12px; }
+        .ttt-cell { width: 58px; height: 58px; background: #fff5f6; border: 2px solid #ffccd5; border-radius: 12px; display: flex; justify-content: center; align-items: center; font-size: 1.4rem; font-weight: bold; color: #ff1a53; cursor: pointer; }
+        
+        /* Maze Grid Layout */
+        .maze-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; width: 200px; height: 200px; margin-bottom: 15px; }
+        .maze-cell { background: #fff0f3; border-radius: 8px; border: 1px solid #ffccd5; display: flex; justify-content: center; align-items: center; font-size: 1.3rem; }
+        .maze-wall { background: #ff99b3; border: none; position: relative; }
+        .maze-wall::after { content: '❌'; font-size: 0.7rem; opacity: 0.4; }
+        .maze-controls { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; width: 120px; margin-top: 5px; }
+        .ctrl-btn { background: #fff; border: 2px solid #ff4d79; border-radius: 8px; padding: 8px; font-weight: bold; cursor: pointer; color: #ff4d79; }
+
+        /* Scratch Card */
+        #scratch-container { position: relative; width: 240px; height: 110px; margin: 15px 0; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        #scratch-reward { position: absolute; width: 100%; height: 100%; background: #fff0f3; display: flex; justify-content: center; align-items: center; padding: 10px; font-weight: 700; color: #d60062; font-size: 0.95rem; text-align: center; border-radius: 15px; border: 2px dashed #ff4d79; }
+        #scratch-canvas { position: absolute; top: 0; left: 0; cursor: pointer; z-index: 2; }
     </style>
 </head>
 <body>
 
     <div class="game-card active" id="p1">
-        <div class="avatar-box">🎮</div>
-        <h2>The Love Arcade v2.0</h2>
-        <p>"Arey suno! Maine tumhare liye ek special multi-level gaming maze banaya hai. Kya tum saare levels paar karke end tak pahonch sakti ho?"</p>
-        <button class="btn" onclick="nextPage('p1', 'p2')">Let's Play! 🚀</button>
+        <div class="avatar-box">✨💖</div>
+        <h2>Welcome, My Favorite Person!</h2>
+        <p>"Arey suno! Instagram ke temporary trends toh har koi follow kar leta hai... Par maine tumhare liye ek special, fully customized interactive mini-games ka arcade banaya hai.<br><br>I hope ye tumhare chehre par ek pyaari si smile lekar aaye. Kya tum ye mini-challenges khelne ke liye ready ho?"</p>
+        <button class="btn" onclick="nextPage('p1', 'p2')">Let's Play, Shona! 🚀</button>
     </div>
 
     <div class="game-card" id="p2">
-        <div class="avatar-box">🧩</div>
-        <h2>Level 1: The Riddle</h2>
-        <p>"Duniya ki wo kaunsi cheez hai jo gusse me golgappa ban jaati hai, pr thodi der me cute shona ban jaati hai?"</p>
-        <input type="text" class="text-input" id="riddleAns" placeholder="Hint: Tum khud 😉">
-        <button class="btn" onclick="checkRiddle()">Verify Answer 🔓</button>
+        <div class="level-tag">Level 1</div>
+        <div class="avatar-box">🔤</div>
+        <h2>The Word Shuffler</h2>
+        <p id="shufflePrompt">Round 1/2: Is jumbled word ko theek karo:<br><br><b style="font-size: 1.5rem; color:#ff4d79; letter-spacing: 3px;">O H N A S</b></p>
+        <input type="text" class="text-input" id="shuffleAns" placeholder="Correct word type karo...">
+        <button class="btn" onclick="checkShuffle()">Submit Word 🚀</button>
     </div>
 
     <div class="game-card" id="p3">
-        <div class="avatar-box">⚡</div>
-        <h2>Level 2: Heart Catcher</h2>
-        <p>Aapki ungliyan kitni tez hain? Is bhaagte hue dil ko 5 baar touch karo!</p>
-        <div style="font-weight: 700; color: #ff4d79; margin-bottom: 10px;">Score: <span id="click-score">0</span> / 5</div>
-        <div id="clicker-arena"><div id="running-heart" onclick="catchHeart()">❤️</div></div>
-        <button class="btn" id="p3-next" style="display: none;" onclick="nextPage('p3', 'p4'); initMemoryGame();">Next Level 👉</button>
+        <div class="level-tag">Level 2</div>
+        <div class="avatar-box">❌⭕</div>
+        <h2>Tic-Tac-Toe Arena</h2>
+        <p>Chalo Zero-Kaata ho jaye! Is baar computer bot aapki chalein block karne ki koshish karega. Match jeeto ya draw karo!</p>
+        <div style="display:flex; justify-content:center; width:100%;">
+            <div class="ttt-grid" id="tttGrid">
+                <div class="ttt-cell" onclick="playTTT(0)"></div>
+                <div class="ttt-cell" onclick="playTTT(1)"></div>
+                <div class="ttt-cell" onclick="playTTT(2)"></div>
+                <div class="ttt-cell" onclick="playTTT(3)"></div>
+                <div class="ttt-cell" onclick="playTTT(4)"></div>
+                <div class="ttt-cell" onclick="playTTT(5)"></div>
+                <div class="ttt-cell" onclick="playTTT(6)"></div>
+                <div class="ttt-cell" onclick="playTTT(7)"></div>
+                <div class="ttt-cell" onclick="playTTT(8)"></div>
+            </div>
+        </div>
+        <p id="tttStatus" style="font-weight:700; color:#ff4d79; margin:0;">Aapki baari (X) 🤞</p>
+        <button class="btn" id="tttNext" style="display:none; margin-top:5px;" onclick="nextPage('p3', 'p4'); initMaze();">Next Level 👉</button>
     </div>
 
     <div class="game-card" id="p4">
-        <div class="avatar-box">🧠</div>
-        <h2>Level 3: Match the Vibes</h2>
-        <p>Saare matching pairs dhoodho! Mere dil ki baatein kahan chhupi hain?</p>
-        <div class="memory-grid" id="grid"></div>
-        <button class="btn" id="p4-next" style="display: none;" onclick="nextPage('p4', 'p5')">Wow, Clear! Continue 👉</button>
+        <div class="level-tag">Level 3</div>
+        <div class="avatar-box">🗺️</div>
+        <h2>Secret Path Explorer</h2>
+        <p>Niche diye buttons se apni emoji (🙋‍♀️) ko safe raste se chala kar dil (❤️) tak pahonchao! Cross (❌) par touch mat karna.</p>
+        <div style="display:flex; justify-content:center; width:100%;">
+            <div class="maze-grid" id="mazeGrid"></div>
+        </div>
+        <div style="display:flex; justify-content:center; width:100%;">
+            <div class="maze-controls">
+                <div></div><button class="ctrl-btn" onclick="moveMaze('up')">▲</button><div></div>
+                <button class="ctrl-btn" onclick="moveMaze('left')">◀</button><div></div><button class="ctrl-btn" onclick="moveMaze('right')">▶</button>
+                <div></div><button class="ctrl-btn" onclick="moveMaze('down')">▼</button><div></div>
+            </div>
+        </div>
+        <button class="btn" id="mazeNext" style="display:none; margin-top:10px;" onclick="nextPage('p4', 'p5')">Unlock Next Level 👉</button>
     </div>
 
-    <div class="game-card" id="p5">
-        <div class="avatar-box">🙄</div>
-        <h2>Level 4: Honest Check</h2>
-        <p>"Aaj kal tum bohot bzy rehti ho. Mujhe reels send karti ho par real dhyan nahi deti. Kya ye sach hai?"</p>
-        <div class="choice-container" style="justify-content: center; gap: 10px;">
-            <button class="btn" style="width: auto;" onclick="nextPage('p5', 'p6')">Sorry, ab dhyan dungi! 🥰</button>
-            <button class="btn" style="width: auto; background: #6c757d;" onclick="alert('Galat jawab! Sorry bolo 😂')">Nahi toh 😜</button>
-        </div>
+    <div class="game-card" id="p5" style="background: #fff5f5; border: 2px solid #ff4d4d;">
+        <div class="level-tag" style="background: #ff3333;">Level 4</div>
+        <div class="avatar-box" style="background: #ffe6e6;">⚠️</div>
+        <h2 style="color: #d93838;">System Overload!</h2>
+        <p style="color: #b32424; font-weight: 600;">"Error 404: Too much attitude/cuteness detected inside layout matrix. System core crash!<br><br>Please press the button below to reboot frames."</p>
+        <button class="btn" style="background: linear-gradient(135deg, #ff3333 0%, #cc0000 100%);" onclick="nextPage('p5', 'p6')">Give a Kiss to Reboot 💋</button>
     </div>
 
     <div class="game-card" id="p6">
-        <div class="avatar-box">😈</div>
-        <h2>Level 5: The Final Test</h2>
-        <p>"Accha sab chhodna... Sach sach batao, Do you love me? (Mana karke dikhao ab)"</p>
-        <div class="choice-container" id="dodge-box">
-            <button class="btn" style="position: absolute; left: 10%; width: 40%;" onclick="nextPage('p6', 'p7')">Yes!</button>
-            <button class="btn btn-dodge" id="noBtn" style="width: 40%;" onmouseover="dodgeButton()" onclick="dodgeButton()">No</button>
-        </div>
+        <div class="level-tag">Level 5</div>
+        <div class="avatar-box">📊</div>
+        <h2>Gussa Calculator</h2>
+        <p>"Sach sach batana, tumhe mere upar din bhar mein kitna gussa aata hai? Track your mood:"</p>
+        <input type="range" min="0" max="100" value="20" class="slider-range" id="gussaSlider" oninput="updateSlider(this.value)">
+        <div class="slider-val" id="sliderText">20% - Bas thoda sa 🥺</div>
+        <button class="btn" onclick="nextPage('p6', 'p7'); initScratchCard();">Submit Report 📝</button>
     </div>
 
     <div class="game-card" id="p7">
-        <div class="avatar-box" style="background: none; box-shadow: none;">💖</div>
-        <h2>Victory! You Won My Heart 🎉</h2>
-        <p style="color: #ff4d79; font-weight: 700; font-size: 1.1rem; font-style: italic;">
-            "Instagram ke temporary trends toh har koi follow kar leta hai... Par ek aisa genuine aur customized gaming surprise sirf tum jaisi unique ladki deserve karti hai! ✨"
-        </p>
-        <button class="btn" onclick="nextPage('p7', 'p8')">Claim Reward 🎁</button>
+        <div class="level-tag">Level 6 & 7</div>
+        <div class="avatar-box">🎁</div>
+        <h2>Grand Reward Scratch</h2>
+        <p>Aapne saare difficult levels clear kar diye hain! Apni ungli se niche diye panel ko scratch karke prize dekho:</p>
+        <div id="scratch-container">
+            <div id="scratch-reward">Congrats! You won 1 Ice-Cream Date + 1 Long Tight Hug! 🍦❤️</div>
+            <canvas id="scratch-canvas" width="240" height="110"></canvas>
+        </div>
+        <button class="btn" onclick="nextPage('p7', 'p8')">Claim & Finish Game 👑</button>
     </div>
 
     <div class="game-card" id="p8">
+        <div class="level-tag">Level 8</div>
         <div class="avatar-box">🎬</div>
-        <h2>Mission Accomplished 👑</h2>
-        <p>"Agar is custom cyber game ne tumhare chehre par ek pyaari si smile laayi ho, toh jaldi se ek memory screenshot lo aur mujhe WhatsApp par ek sweet sa review do! ✨🍿"</p>
-        <button class="btn" onclick="alert('Jaldi jao aur review do abhi! 😉')">Done! Share Love 🫶</button>
+        <h2>Mission Accomplished!</h2>
+        <p>"Agar is customized hardcore multi-level arcade game ne tumhare chehre par ek pyaari si smile laayi ho, toh jaldi se iska ek screenshot lo aur mujhe WhatsApp par review do! ✨🍿"</p>
+        <button class="btn" onclick="alert('Jaldi jao aur review screenshot share karo! 😉')">Done! Share Love 🫶</button>
     </div>
 
     <script>
@@ -134,53 +156,145 @@
             document.getElementById(curr).classList.remove('active');
             document.getElementById(next).classList.add('active');
         }
-        function checkRiddle() {
-            const ans = document.getElementById('riddleAns').value.trim().toLowerCase();
-            if(ans.length > 1) { nextPage('p2', 'p3'); initClicker(); }
-            else { alert('Arey! Sahi jawab type karo jaldi se! 😜'); }
-        }
-        let clickScore = 0; const hrt = document.getElementById('running-heart'); const arena = document.getElementById('clicker-arena'); let clkInterval;
-        function moveHeart() {
-            const maxX = arena.clientWidth - 35; const maxY = arena.clientHeight - 35;
-            hrt.style.left = Math.floor(Math.random() * maxX) + 'px'; hrt.style.top = Math.floor(Math.random() * maxY) + 'px';
-        }
-        function initClicker() { clkInterval = setInterval(moveHeart, 650); }
-        function catchHeart() {
-            if(clickScore < 5) {
-                clickScore++; document.getElementById('click-score').innerText = clickScore;
-                if(clickScore >= 5) { clearInterval(clkInterval); hrt.style.display = 'none'; document.getElementById('p3-next').style.display = 'block'; }
+
+        // Word Shuffler Double Round Logic
+        let shuffleRound = 1;
+        function checkShuffle() {
+            const ans = document.getElementById('shuffleAns').value.trim().toLowerCase();
+            if(shuffleRound === 1) {
+                if(ans === 'shona') {
+                    shuffleRound = 2;
+                    document.getElementById('shufflePrompt').innerHTML = "Round 2/2: Ek aur bikhra word solve karo:<br><br><b style='font-size: 1.5rem; color:#ff4d79; letter-spacing: 3px;'>E C U E T</b>";
+                    document.getElementById('shuffleAns').value = "";
+                } else { alert('Galat spelling! Dhyan se guess karo 😜'); }
+            } else if(shuffleRound === 2) {
+                if(ans === 'cute') { nextPage('p2', 'p3'); }
+                else { alert('Arey last wala galat kar diya! Dubara sahi karo 😜'); }
             }
         }
-        const items = ['❤️', '❤️', '✨', '✨', '🌸', '🌸', '👑', '👑']; let flippedCards = []; let matchedPairs = 0;
-        function initMemoryGame() {
-            const grid = document.getElementById('grid'); grid.innerHTML = ''; items.sort(() => 0.5 - Math.random());
-            items.forEach((item, index) => {
-                const card = document.createElement('div'); card.classList.add('memory-card'); card.dataset.value = item;
-                card.innerText = '?'; card.addEventListener('click', flipCard); grid.appendChild(card);
-            });
+
+        // Smart Block Rigged Tic-Tac-Toe
+        let tttBoard = ["","","","","","","","",""];
+        let gameActive = true;
+        const cells = document.querySelectorAll('.ttt-cell');
+
+        function playTTT(index) {
+            if(tttBoard[index] !== "" || !gameActive) return;
+            tttBoard[index] = "X";
+            cells[index].innerText = "X";
+            
+            if(checkTTTWin("X")) { endTTTGame("Aap Jeet Gayi! 🎉"); return; }
+            if(!tttBoard.includes("")) { endTTTGame("Great Job! Draw Hogya."); return; }
+            
+            gameActive = false;
+            document.getElementById('tttStatus').innerText = "Bot soch raha hai... 🤔";
+            setTimeout(botSmartMove, 400);
         }
-        function flipCard() {
-            if (flippedCards.length < 2 && !this.classList.contains('flipped')) {
-                this.classList.add('flipped'); this.innerText = this.dataset.value; flippedCards.push(this);
-                if (flippedCards.length === 2) { setTimeout(checkMatch, 500); }
+
+        function botSmartMove() {
+            let move = -1;
+            const winLines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+            
+            for (let line of winLines) {
+                let xCount = line.filter(idx => tttBoard[idx] === "X").length;
+                let emptyCount = line.filter(idx => tttBoard[idx] === "").length;
+                if (xCount === 2 && emptyCount === 1) {
+                    move = line.find(idx => tttBoard[idx] === "");
+                    break;
+                }
+            }
+            if (move === -1) {
+                let empty = [];
+                tttBoard.forEach((v, i) => { if(v==="") empty.push(i); });
+                move = empty[Math.floor(Math.random() * empty.length)];
+            }
+            
+            if(move !== undefined && move !== -1) {
+                tttBoard[move] = "O"; cells[move].innerText = "O";
+                if(checkTTTWin("O")) { tttBoard[move] = ""; cells[move].innerText = ""; botSmartMove(); return; }
+            }
+            document.getElementById('tttStatus').innerText = "Aapki baari (X) 🤞";
+            gameActive = true;
+            if(!tttBoard.includes("")) { endTTTGame("Great Match!"); }
+        }
+
+        function checkTTTWin(p) {
+            return [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]].some(c => c.every(i => tttBoard[i] === p));
+        }
+        function endTTTGame(msg) {
+            gameActive = false; document.getElementById('tttStatus').innerText = msg;
+            document.getElementById('tttNext').style.display = "block";
+        }
+
+        // Secret Path Grid Maze Engine
+        let playerPos = { x: 0, y: 0 };
+        const targetPos = { x: 3, y: 3 };
+        const walls = ["1,0", "2,1", "0,2", "2,2"]; 
+
+        function initMaze() {
+            const grid = document.getElementById('mazeGrid'); grid.innerHTML = '';
+            for (let r = 0; r < 4; r++) {
+                for (let c = 0; c < 4; c++) {
+                    const cell = document.createElement('div'); cell.classList.add('maze-cell');
+                    cell.id = `maze-${c}-${r}`;
+                    if (walls.includes(`${c},${r}`)) cell.classList.add('maze-wall');
+                    if (c === targetPos.x && r === targetPos.y) cell.innerText = '❤️';
+                    grid.appendChild(cell);
+                }
+            }
+            updateMazeData();
+        }
+
+        function updateMazeData() {
+            for (let r = 0; r < 4; r++) {
+                for (let c = 0; c < 4; c++) {
+                    const cell = document.getElementById(`maze-${c}-${r}`);
+                    if (!walls.includes(`${c},${r}`) && !(c===targetPos.x && r===targetPos.y)) cell.innerText = '';
+                }
+            }
+            document.getElementById(`maze-${playerPos.x}-${playerPos.y}`).innerText = '🙋‍♀️';
+        }
+
+        function moveMaze(dir) {
+            let newX = playerPos.x; let newY = playerPos.y;
+            if(dir === 'up') newY--; if(dir === 'down') newY++;
+            if(dir === 'left') newX--; if(dir === 'right') newX++;
+            
+            if(newX >= 0 && newX < 4 && newY >= 0 && newY < 4) {
+                if(walls.includes(`${newX},${newY}`)) { alert('Ouch! Rasta block hai, cross par mat jao! 😜'); return; }
+                playerPos.x = newX; playerPos.y = newY; updateMazeData();
+                if(playerPos.x === targetPos.x && playerPos.y === targetPos.y) {
+                    alert('Wow! Sahi rasta dhoodh liya 🎉'); document.getElementById('mazeNext').style.display = 'block';
+                }
             }
         }
-        function checkMatch() {
-            if (flippedCards[0].dataset.value === flippedCards[1].dataset.value) {
-                matchedPairs++; if (matchedPairs === 4) { document.getElementById('p4-next').style.display = 'block'; }
-            } else {
-                flippedCards[0].classList.remove('flipped'); flippedCards[0].innerText = '?';
-                flippedCards[1].classList.remove('flipped'); flippedCards[1].innerText = '?';
+
+        function initScratchCard() {
+            const canvas = document.getElementById('scratch-canvas'); const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#b0b0b0'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.font = 'bold 16px sans-serif'; ctx.fillStyle = '#666666'; ctx.fillText('Scratch Here 🖐️', 65, 60);
+
+            let isDrawing = false;
+            function scratch(e) {
+                if (!isDrawing) return;
+                const rect = canvas.getBoundingClientRect();
+                const x = (e.clientX || e.touches[0].clientX) - rect.left;
+                const y = (e.clientY || e.touches[0].clientY) - rect.top;
+                ctx.globalCompositeOperation = 'destination-out'; ctx.beginPath(); ctx.arc(x, y, 18, 0, Math.PI * 2); ctx.fill();
             }
-            flippedCards = [];
+            canvas.addEventListener('mousedown', () => isDrawing = true); canvas.addEventListener('mouseup', () => isDrawing = false);
+            canvas.addEventListener('mousemove', scratch); canvas.addEventListener('touchstart', () => isDrawing = true);
+            canvas.addEventListener('touchend', () => isDrawing = false); canvas.addEventListener('touchmove', scratch);
         }
-        const complaints = ["No", "Pakka? 🤨", "Soch lo... 🫣", "Galat baat! 🙄", "Yes dabao 🤫"]; let cmpIdx = 0;
-        function dodgeButton() {
-            const noBtn = document.getElementById('noBtn'); const dBox = document.getElementById('dodge-box');
-            const maxW = dBox.clientWidth - noBtn.clientWidth - 10;
-            noBtn.style.left = Math.floor(Math.random() * maxW) + 'px';
-            if(cmpIdx < complaints.length - 1) { cmpIdx++; noBtn.innerText = complaints[cmpIdx]; }
+
+        function updateSlider(val) {
+            const txt = document.getElementById('sliderText');
+            if(val <= 25) txt.innerText = val + "% - Bas thoda sa 🥺";
+            else if(val <= 60) txt.innerText = val + "% - Baat-baat par gussa 🫣";
+            else if(val <= 85) txt.innerText = val + "% - Danger level gussa! 😡";
+            else txt.innerText = val + "% - Bilkul Golgappa Rakshas! 😈";
         }
+
         function spawnBackgroundDecor() {
             const p = document.createElement('div'); p.classList.add('bg-heart'); p.innerHTML = ['❤️','💖','✨'][Math.floor(Math.random() * 3)];
             p.style.left = Math.random() * 100 + 'vw'; p.style.animationDuration = (Math.random() * 2 + 4) + 's';
