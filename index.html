@@ -51,11 +51,11 @@
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(135deg, #ffccd5 0%, #ff4d79 100%);
             border-radius: 32px; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; z-index: 15; cursor: pointer;
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: inset 0 0 30px rgba(0,0,0,0.1);
+            justify-content: center; align-items: center; z-index: 99; cursor: pointer;
+            transition: all 0.5s ease-in-out; box-shadow: inset 0 0 30px rgba(0,0,0,0.1);
         }
         #p1-gate.opened {
-            opacity: 0; transform: scale(1.2) translateY(-120px); pointer-events: none;
+            opacity: 0; transform: scale(0.8) translateY(-150px); pointer-events: none;
         }
         .gate-lock { font-size: 3.5rem; margin-bottom: 15px; animation: heartbeat 1.2s infinite; }
         @keyframes heartbeat { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
@@ -114,7 +114,7 @@
         <div id="p1-gate" onclick="openGateEffect()">
             <div class="gate-lock">🔒❤️</div>
             <h2 style="color: white; font-weight: 900; letter-spacing: 1px;">LOVE ARCADE</h2>
-            <p style="color: #fff0f3; font-weight: 600; font-size: 0.9rem; animation: heartbeat 1.5s infinite;">Tap to unlock the gate...</p>
+            <p style="color: #fff0f3; font-weight: 600; font-size: 0.9rem;">Tap to unlock the gate...</p>
         </div>
 
         <div id="p1-content" style="display: none; flex-direction: column; align-items: center; width: 100%;">
@@ -258,17 +258,18 @@
     </div>
 
     <script>
-        // GATE OPENING LOGIC
+        // FIXED GATE EFFECT (No overlay blockage anymore)
         function openGateEffect() {
             const gate = document.getElementById('p1-gate');
             const content = document.getElementById('p1-content');
             
-            gate.classList.add('opened'); // Triggers slide & fade zoom
+            gate.classList.add('opened'); 
             
             setTimeout(() => {
+                gate.style.display = 'none'; // Completely clears layout block
                 content.style.display = 'flex';
                 content.style.animation = 'cardEntrance 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
-            }, 300);
+            }, 500);
         }
 
         function nextPage(curr, next) {
@@ -315,5 +316,4 @@
                     alert('Superb! 5 points pure ho gaye. Next level unblocked! 🍕');
                 }
             }
-        }
-        function r
+  
