@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Ultimate Love Mega Arcade 🎮❤️</title>
+    <title>Happy Father's Day Daddy ❤️</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
             display: flex; justify-content: center; align-items: center; height: 100vh;
-            background: linear-gradient(-45deg, #ffe6eb, #ffccd5, #fff0f3, #ffd1dc);
+            background: linear-gradient(-45deg, #fff5f5, #ffe3e3, #fff0f3, #ffdee5);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
             font-family: 'Segoe UI', system-ui, sans-serif;
@@ -32,288 +32,89 @@
             100% { transform: translateY(-115vh) rotate(360deg) scale(1.3); opacity: 0; }
         }
 
-        /* Glassmorphic Mega Card */
-        .game-card {
-            background: rgba(255, 255, 255, 0.88);
+        /* Main Surprise Card */
+        .surprise-card {
+            background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            padding: 25px 22px; border-radius: 32px;
-            box-shadow: 0 25px 55px rgba(255, 77, 109, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.6);
-            width: 92%; max-width: 365px; min-height: 520px; display: none;
-            flex-direction: column; justify-content: center; align-items: center;
+            padding: 35px 24px; border-radius: 32px;
+            box-shadow: 0 25px 55px rgba(255, 77, 109, 0.15), inset 0 0 20px rgba(255, 255, 255, 0.6);
+            width: 92%; max-width: 365px; min-height: 450px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
             position: relative; z-index: 5; border: 2px solid rgba(255, 255, 255, 0.7); text-align: center;
+            animation: cardEntrance 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
+
+        @keyframes cardEntrance { 
+            from { transform: scale(0.85) translateY(30px); opacity: 0; } 
+            to { transform: scale(1) translateY(0); opacity: 1; } 
+        }
+
+        .avatar-box { width: 90px; height: 90px; background: linear-gradient(135deg, #fff0f3, #ffe6eb); border-radius: 50%; margin-bottom: 18px; display: flex; justify-content: center; align-items: center; font-size: 3rem; box-shadow: 0 10px 22px rgba(255, 77, 109, 0.12); border: 2px solid #fff; }
+        h2 { font-size: 1.5rem; color: #1e293b; margin-bottom: 15px; font-weight: 800; }
         
-        .game-card.active { display: flex; animation: cardEntrance 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        @keyframes cardEntrance { from { transform: scale(0.88) translateY(20px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+        /* Wish Section Card */
+        .wish-box { background: #fffcfd; border: 2px dashed #ffccd5; border-radius: 20px; width: 100%; padding: 18px; margin-bottom: 22px; box-shadow: 0 8px 20px rgba(255, 77, 109, 0.02); text-align: center; }
+        p { color: #334155; font-size: 0.98rem; line-height: 1.6; font-weight: 500; font-style: italic; }
 
-        /* GATE EFFECT STYLES */
-        #p1-gate {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(135deg, #ffccd5 0%, #ff4d79 100%);
-            border-radius: 32px; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; z-index: 99; cursor: pointer;
-            transition: all 0.5s ease-in-out; box-shadow: inset 0 0 30px rgba(0,0,0,0.1);
-        }
-        #p1-gate.opened {
-            opacity: 0; transform: scale(0.8) translateY(-150px); pointer-events: none;
-        }
-        .gate-lock { font-size: 3.5rem; margin-bottom: 15px; animation: heartbeat 1.2s infinite; }
-        @keyframes heartbeat { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
-
-        .avatar-box { width: 85px; height: 85px; background: linear-gradient(135deg, #fff0f3, #ffe6eb); border-radius: 50%; margin-bottom: 14px; display: flex; justify-content: center; align-items: center; font-size: 2.6rem; box-shadow: 0 10px 22px rgba(255, 77, 109, 0.12); border: 2px solid #fff; }
-        .level-tag { background: linear-gradient(135deg, #ff4d79, #ff1a53); color: white; font-size: 0.72rem; padding: 4px 14px; border-radius: 50px; font-weight: 800; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 10px rgba(255, 26, 83, 0.25); }
-        h2 { font-size: 1.4rem; color: #1e293b; margin-bottom: 10px; font-weight: 800; }
-        p { color: #475569; font-size: 0.95rem; line-height: 1.5; margin-bottom: 18px; font-weight: 500; }
-
-        .btn { 
+        /* Interactive Button */
+        .voucher-btn { 
             background: linear-gradient(135deg, #ff4d79 0%, #ff1a53 50%, #e6003e 100%); 
-            color: white; border: none; padding: 13px 28px; font-size: 1rem; font-weight: 700; border-radius: 50px; cursor: pointer; width: 100%; 
+            color: white; border: none; padding: 14px 28px; font-size: 1rem; font-weight: 700; border-radius: 50px; cursor: pointer; width: 100%; 
             box-shadow: 0 6px 20px rgba(255, 26, 83, 0.3); transition: all 0.2s;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
         }
-        .btn:active { transform: scale(0.97); }
+        .voucher-btn:active { transform: scale(0.97); }
 
-        /* General Arena Styles */
-        .arena-box { width: 100%; height: 180px; background: linear-gradient(180deg, #fffcfd, #fff0f3); border-radius: 20px; border: 2px dashed #ffccd5; position: relative; overflow: hidden; margin-bottom: 15px; }
-
-        /* Tic Tac Toe */
-        .ttt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; max-width: 195px; margin-bottom: 10px; }
-        .ttt-cell { width: 60px; height: 60px; background: #fff; border: 2px solid #ffccd5; border-radius: 14px; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; font-weight: 900; color: #ff1a53; cursor: pointer; }
-
-        /* Flappy Game Elements */
-        #flappy-bird { position: absolute; left: 40px; top: 70px; font-size: 26px; transition: top 0.1s ease; }
-        #flappy-obstacle { position: absolute; right: -40px; width: 35px; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
-        .pipe-block { width: 100%; background: #ff4d79; border-radius: 6px; }
-
-        /* Quiz MCQs */
-        .quiz-option { background: #fff; border: 2px solid #ffccd5; padding: 10px 15px; border-radius: 15px; margin-bottom: 8px; font-weight: 600; color: #475569; cursor: pointer; transition: all 0.2s; text-align: left; font-size: 0.92rem; }
-        .quiz-option:active { background: #fff0f3; border-color: #ff4d79; }
-
-        /* Slot Machine */
-        .slot-wrapper { display: flex; gap: 12px; justify-content: center; margin: 15px 0; }
-        .slot-window { width: 65px; height: 75px; background: #fff; border: 3px solid #ff4d79; border-radius: 14px; font-size: 2.2rem; display: flex; justify-content: center; align-items: center; box-shadow: inset 0 4px 10px rgba(0,0,0,0.05); }
-
-        /* Love Battery */
-        .battery-container { width: 90%; height: 38px; border: 3px solid #ff4d79; border-radius: 12px; padding: 3px; margin: 15px 0; background: #fff; }
-        .battery-bar { width: 15%; height: 100%; background: linear-gradient(90deg, #ff758c, #ff1a53); border-radius: 6px; transition: width 0.12s ease; }
-
-        /* Scratch Card Box */
-        #scratch-container { position: relative; width: 250px; height: 115px; margin: 15px 0; border-radius: 18px; overflow: hidden; box-shadow: 0 10px 25px rgba(255,77,109,0.15); }
-        #scratch-reward { position: absolute; width: 100%; height: 100%; background: #fff; display: flex; justify-content: center; align-items: center; padding: 12px; font-weight: 800; font-size: 0.95rem; text-align: center; border-radius: 18px; border: 2px dashed #ff4d79; transition: background 0.3s; }
-
-        /* Final Certificate layout elements */
-        .cert-card { background: #fffcfd; border: 2px solid #ffd1dc; border-radius: 20px; width: 100%; padding: 15px; margin-bottom: 15px; box-shadow: 0 8px 20px rgba(255, 77, 109, 0.05); position: relative; overflow: hidden; }
-        .cert-card::before { content: '★ SECURITY VERIFIED ★'; position: absolute; top: 0; left: 0; width: 100%; background: #ff1a53; color: white; font-size: 0.6rem; font-weight: 900; letter-spacing: 2px; padding: 2px 0; }
-        .reward-badge { font-size: 2.8rem; margin: 8px 0; animation: scaleGlow 1.5s infinite ease-in-out; }
-        @keyframes scaleGlow { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
-        .interactive-claim-box { background: #fff0f3; padding: 10px; border-radius: 12px; font-size: 0.85rem; font-weight: 700; color: #ff1a53; border: 1px dashed #ff4d79; margin-bottom: 12px; width: 100%; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        /* Secret Voucher Layout */
+        #secret-voucher {
+            background: #e6fffa; border: 2px solid #319795; color: #234e52;
+            padding: 14px; border-radius: 18px; width: 100%; font-weight: 700;
+            font-size: 0.92rem; margin-top: 15px; display: none; 
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <div class="game-card active" id="p1">
-        <div id="p1-gate" onclick="openGateEffect()">
-            <div class="gate-lock">🔒❤️</div>
-            <h2 style="color: white; font-weight: 900; letter-spacing: 1px;">LOVE ARCADE</h2>
-            <p style="color: #fff0f3; font-weight: 600; font-size: 0.9rem;">Tap to unlock the gate...</p>
-        </div>
-
-        <div id="p1-content" style="display: none; flex-direction: column; align-items: center; width: 100%;">
-            <div class="avatar-box">😽🫶</div>
-            <h2>Welcome Cutie 😽🫶</h2>
-            <p>"Arey suno! Maine tumhare liye pure 6 custom levels ka ek super ultra high-end gaming console tyyar kiya hai.<br><br>Saare games ek se badhkar ek hain aur end me ek special treat scratch card bhi hai. Let's check!"</p>
-            <button class="btn" onclick="nextPage('p1', 'p2'); initFoodCatcher();">Start Game 🚀</button>
-        </div>
-    </div>
-
-    <div class="game-card" id="p2">
-        <div class="level-tag">Level 1</div>
-        <div class="avatar-box">🍕🤢</div>
-        <h2>Food Catcher Game</h2>
-        <p>Basket (🧺) ko buttons se hilaao aur falling treats catch karo. Par yaad rakhna, agar galti se **Karela (🤢)** pakda toh points ghatt jayenge! Score 5 points to win.</p>
-        <div style="font-weight: 800; color: #ff1a53; font-size:1.05rem; margin-bottom: 6px;">Score: <span id="food-score">0</span> / 5</div>
-        <div class="arena-box" id="food-arena">
-            <div id="falling-food" style="position: absolute; font-size: 30px; top: -40px; left: 50%;">🍕</div>
-            <div id="food-basket" style="position: absolute; bottom: 8px; left: 40%; font-size: 35px; width: 50px; height: 40px; display: flex; justify-content: center; align-items: center;">🧺</div>
-        </div>
-        <div style="display:flex; gap:15px; width:100%;">
-            <button class="btn" style="padding:10px; background:#fff; color:#ff1a53; border:2px solid #ffccd5; box-shadow:none;" onclick="moveFoodBasket(-25)">◀ Left</button>
-            <button class="btn" style="padding:10px;" onclick="moveFoodBasket(25)">Right ▶</button>
-        </div>
-        <button class="btn" id="foodNextBtn" style="display:none; margin-top:10px;" onclick="nextPage('p2', 'p3')">Next Level 👉</button>
-    </div>
-
-    <div class="game-card" id="p3">
-        <div class="level-tag">Level 2</div>
-        <div class="avatar-box">❌⭕</div>
-        <h2>Tic-Tac-Toe Arena</h2>
-        <p>Computer bot ke saath zero-kaata khelo aur match ko win ya draw karke unblock karo!</p>
-        <div style="display:flex; justify-content:center; width:100%;">
-            <div class="ttt-grid" id="tttGrid">
-                <div class="ttt-cell" onclick="playTTT(0)"></div>
-                <div class="ttt-cell" onclick="playTTT(1)"></div>
-                <div class="ttt-cell" onclick="playTTT(2)"></div>
-                <div class="ttt-cell" onclick="playTTT(3)"></div>
-                <div class="ttt-cell" onclick="playTTT(4)"></div>
-                <div class="ttt-cell" onclick="playTTT(5)"></div>
-                <div class="ttt-cell" onclick="playTTT(6)"></div>
-                <div class="ttt-cell" onclick="playTTT(7)"></div>
-                <div class="ttt-cell" onclick="playTTT(8)"></div>
-            </div>
-        </div>
-        <p id="tttStatus" style="font-weight:800; color:#ff1a53;">Aapki baari (X) 🤞</p>
-        <button class="btn" id="tttNext" style="display:none; margin-top:5px;" onclick="nextPage('p3', 'p4'); initFlappyGame();">Next Level 👉</button>
-    </div>
-
-    <div class="game-card" id="p4">
-        <div class="level-tag">Level 3</div>
-        <div class="avatar-box">🎈😡</div>
-        <h2>Flappy Heart Jump</h2>
-        <p>"Tap to Jump" button daba kar Dil ❤️ ko hawa me rakho aur saamne se aate gusse waale emojis (😡) se takraye bina 5 bars dodge karo!</p>
-        <div style="font-weight:800; color:#ff1a53; margin-bottom:5px;">Doded: <span id="flappy-score">0</span> / 5</div>
-        <div class="arena-box" id="flappy-arena" style="background: linear-gradient(to bottom, #fffcfd, #ffe6eb);">
-            <div id="flappy-bird">❤️</div>
-            <div id="flappy-obstacle">
-                <div class="pipe-block" id="pipe-top" style="height: 45px;">😡</div>
-                <div class="pipe-block" id="pipe-bottom" style="height: 55px;">😡</div>
-            </div>
-        </div>
-        <button class="btn" style="background: #1e293b;" onclick="flappyJump()">🚀 TAP TO JUMP</button>
-        <button class="btn" id="flappyNext" style="display:none; margin-top:10px;" onclick="nextPage('p4', 'p5')">Next Level 👉</button>
-    </div>
-
-    <div class="game-card" id="p5">
-        <div class="level-tag">Level 4</div>
-        <div class="avatar-box">🧠✨</div>
-        <h2>Who Knows Me Better?</h2>
-        <p id="quizQuestion" style="font-weight:700; color:#1e293b; font-size:1.05rem;">Q1: Mera mood off hone par mujhe kya sabse jaldi normal kar sakta hai?</p>
-        <div id="quizOptions" style="width:100%; display:flex; flex-direction:column;">
-            </div>
-    </div>
-
-    <div class="game-card" id="p6">
-        <div class="level-tag">Level 5</div>
-        <div class="avatar-box">🎰🎰</div>
-        <h2>Romantic Slot Machine</h2>
-        <p>Spin wheel ko ghumao aur teenon reels par same matching romantic items lekar aao!</p>
-        <div class="slot-wrapper">
-            <div class="slot-window" id="slot1">🍦</div>
-            <div class="slot-window" id="slot2">🍕</div>
-            <div class="slot-window" id="slot3">🍿</div>
-        </div>
-        <button class="btn" id="spinBtn" onclick="spinSlots()">🎰 SPIN WHEEL</button>
-        <button class="btn" id="slotNext" style="display:none; margin-top:10px;" onclick="nextPage('p6', 'p7'); startBatteryChallenge();">Next Level 👉</button>
-    </div>
-
-    <div class="game-card" id="p7">
-        <div class="level-tag">Level 6</div>
-        <div class="avatar-box">⚡❤️</div>
-        <h2>Love Battery Charger</h2>
-        <p>Jaldi-jaldi tap karke battery ko 100% full karo! Agar slow tap karogi toh charge girne lagega!</p>
-        <div class="battery-text" id="batteryPercent">Battery: 15%</div>
-        <div class="battery-container">
-            <div class="battery-bar" id="batteryBar"></div>
-        </div>
-        <button class="btn" style="background: linear-gradient(135deg, #ff0055, #ff4d79);" onclick="tapBattery()">⚡ TAP FAST! ⚡</button>
-        <button class="btn" id="batteryNext" style="display:none; margin-top:10px;" onclick="nextPage('p7', 'p8')">Next Level 👉</button>
-    </div>
-
-    <div class="game-card" id="p8" style="background: rgba(255,245,245,0.95); border: 2px solid #ff4d4d;">
-        <div class="level-tag" style="background:#ff3333;">System Warning</div>
-        <div class="avatar-box" style="background:#ffe6e6; border-color:#ffb3b3;">⚠️</div>
-        <h2 style="color:#d93838;">Overload Error!</h2>
-        <p style="color:#475569; font-weight:600;">"Error 909: Too much cuteness detected inside layout engine. Core system crashed!<br><br>Please click below to force restart console panels."</p>
-        <button class="btn" style="background: linear-gradient(135deg, #ff3333, #cc0000);" onclick="nextPage('p8', 'p9'); initScratchCard();">Give a Kiss to Reboot 💋</button>
-    </div>
-
-    <div class="game-card" id="p9">
-        <div class="level-tag">Grand Prize Box</div>
-        <div class="avatar-box">🎁🎉</div>
-        <h2>Scratch Your Reward!</h2>
-        <p>You did it! Saare levels successfully beat kar diye hain. Apni finger se niche diye canvas ko rub karke prize unlock karo:</p>
-        <div id="scratch-container">
-            <div id="scratch-reward" style="color: #856404; background-color: #fff3cd;">💥 BUMPER OFFER! You won 1 Litre Bitter Karela Juice Date with No Icecream! 🤢🥦</div>
-            <canvas id="scratch-canvas" width="250" height="115"></canvas>
-        </div>
-        <button class="btn" onclick="nextPage('p9', 'p10')">Claim Reward 👑</button>
-    </div>
-
-    <div class="game-card" id="p10">
-        <div class="level-tag" style="background: linear-gradient(135deg, #ffd700, #ff8c00); color: #000;">Elite Tier Unlocked</div>
-        <div class="reward-badge">🏆👑</div>
-        <h2>Arcade Champion!</h2>
+    <div class="surprise-card">
+        <div class="avatar-box">👨‍👦❤️</div>
+        <h2>Happy Father's Day, Daddy! 🎉</h2>
         
-        <div class="cert-card">
-            <p style="font-size: 0.82rem; color: #7f8c8d; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Official Honor Roll</p>
-            <div style="font-size: 1.25rem; font-weight: 800; color: #ff1a53; font-family: 'Georgia', serif; margin-bottom: 8px;">My Cutest Gussebaaz ❤️</div>
-            <p style="font-size: 0.88rem; color: #2c3e50; line-height: 1.4; margin-bottom: 0;">Has successfully conquered all gaming tiers, bypassed the system overload prank, and earned unlimited premium perks forever!</p>
+        <div class="wish-box">
+            <p>
+                "Daddy, aapne humesha hamari khushiyon ko apni khushiyon se upar rakha hai. Aapka gussa hona bhi hamare liye fikar hi hoti hai. Thank you hamare super-hero banne ke liye! Aap duniya ke sabse best Daddy ho." ❤️✨
+            </p>
         </div>
 
-        <div class="interactive-claim-box" id="claimBonus" onclick="claimVoucher()">
-            🎁 <span>Click to Claim Instant Kiss Voucher</span>
-        </div>
-
-        <button class="btn" style="background: linear-gradient(135deg, #1e293b, #0f172a);" onclick="shareVibe()">
-            ✨ SEND SUCCESS CODE ✨
+        <button class="voucher-btn" onclick="showVoucher()">
+            🎟️ Claim World's Best Dad Gift
         </button>
+
+        <div id="secret-voucher">
+            🎉 SURPRISE REVEALED! 🎉<br>
+            <span style="font-size: 0.85rem; font-weight: 500; display:block; margin-top: 6px; color: #2d3748; font-style: normal; line-height: 1.4;">
+                This voucher entitles Daddy to 1 Full Day of Zero Kich-Kich + Unconditional Chai Service & Unlimited Love! ☕❤️
+            </span>
+        </div>
     </div>
 
     <script>
-        // FIXED GATE EFFECT (No overlay blockage anymore)
-        function openGateEffect() {
-            const gate = document.getElementById('p1-gate');
-            const content = document.getElementById('p1-content');
-            
-            gate.classList.add('opened'); 
-            
-            setTimeout(() => {
-                gate.style.display = 'none'; // Completely clears layout block
-                content.style.display = 'flex';
-                content.style.animation = 'cardEntrance 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
-            }, 500);
+        // Voucher Reveal Function
+        function showVoucher() {
+            const voucher = document.getElementById('secret-voucher');
+            voucher.style.display = 'block';
+            alert('Congratulations Daddy! Special gift voucher unlock ho gaya hai! 🥰');
         }
 
-        function nextPage(curr, next) {
-            document.getElementById(curr).classList.remove('active');
-            document.getElementById(next).classList.add('active');
+        // Background Decorative Floating Elements
+        function spawnHearts() {
+            const p = document.createElement('div'); p.classList.add('bg-heart'); 
+            p.innerHTML = ['❤️','✨','🌸','🎈'][Math.floor(Math.random() * 4)];
+            p.style.left = Math.random() * 100 + 'vw'; p.style.animationDuration = (Math.random() * 2 + 3.5) + 's';
+            document.body.appendChild(p); setTimeout(() => p.remove(), 5000);
         }
-
-        // ================= LEVEL 1: FOOD CATCHER GAME =================
-        let foodScore = 0; let foodBasketX = 40; let foodY = -40; let foodX = 50; let currentFoodType = '🍕'; let foodInterval;
-        const foodList = ['🍕', '🍔', '🍦', '🍩', '🤢']; 
-        const foodObj = document.getElementById('falling-food');
-        const foodBsk = document.getElementById('food-basket');
-        const foodArn = document.getElementById('food-arena');
-
-        function initFoodCatcher() {
-            foodY = -40; foodScore = 0;
-            foodX = Math.floor(Math.random() * (foodArn.clientWidth - 30));
-            currentFoodType = foodList[Math.floor(Math.random() * foodList.length)];
-            foodObj.innerText = currentFoodType;
-            clearInterval(foodInterval);
-            foodInterval = setInterval(runFoodPhysics, 45);
-        }
-        function moveFoodBasket(dir) {
-            foodBasketX += dir;
-            if(foodBasketX < 0) foodBasketX = 0; if(foodBasketX > 82) foodBasketX = 82;
-            foodBsk.style.left = foodBasketX + '%';
-        }
-        function runFoodPhysics() {
-            foodY += 5;
-            if(foodY > foodArn.clientHeight) { resetFoodDrop(); }
-            foodObj.style.top = foodY + 'px'; foodObj.style.left = foodX + 'px';
-
-            let bRect = foodBsk.getBoundingClientRect(); let fRect = foodObj.getBoundingClientRect();
-            if (fRect.bottom >= bRect.top && fRect.top <= bRect.bottom && fRect.left >= bRect.left - 20 && fRect.right <= bRect.right + 20) {
-                if(currentFoodType === '🤢') {
-                    foodScore = Math.max(0, foodScore - 1);
-                    alert('Yuck! Tumne Karela catch kar liya! 🤢 -1 Point');
-                } else { foodScore++; }
-                document.getElementById('food-score').innerText = foodScore;
-                resetFoodDrop();
-                if(foodScore >= 5) {
-                    clearInterval(foodInterval); foodObj.style.display = 'none';
-                    document.getElementById('foodNextBtn').style.display = 'block';
-                    alert('Superb! 5 points pure ho gaye. Next level unblocked! 🍕');
-                }
-            }
-  
+        setInterval(spawnHearts, 500);
+    </script>
+</body>
+</html>
